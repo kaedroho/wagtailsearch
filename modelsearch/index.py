@@ -9,7 +9,7 @@ from django.db import models
 from django.db.models.fields import FieldDoesNotExist
 from django.db.models.fields.related import ForeignObjectRel, OneToOneRel, RelatedField
 
-from wagtail.wagtailsearch.backends import get_search_backends_with_name
+from wagtail.search.backends import get_search_backends_with_name
 
 logger = logging.getLogger('wagtail.search.index')
 

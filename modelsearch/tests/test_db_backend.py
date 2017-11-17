@@ -8,7 +8,7 @@ from .test_backends import BackendTests
 
 
 class TestDBBackend(BackendTests, TestCase):
-    backend_path = 'wagtail.wagtailsearch.backends.db'
+    backend_path = 'wagtail.search.backends.db'
 
     # Doesn't support ranking
     @unittest.expectedFailure

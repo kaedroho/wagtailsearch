@@ -2,7 +2,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.conf.urls import url
 
-from wagtail.wagtailsearch.views import queries
+from wagtail.search.views import queries
 
 app_name = 'wagtailsearch_admin'
 urlpatterns = [

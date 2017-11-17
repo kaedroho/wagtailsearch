@@ -7,7 +7,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from wagtail.wagtailsearch.utils import MAX_QUERY_STRING_LENGTH, normalise_query_string
+from wagtail.search.utils import MAX_QUERY_STRING_LENGTH, normalise_query_string
 
 
 class Query(models.Model):

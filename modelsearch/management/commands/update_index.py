@@ -6,8 +6,8 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from wagtail.wagtailsearch.backends import get_search_backend
-from wagtail.wagtailsearch.index import get_indexed_models
+from wagtail.search.backends import get_search_backend
+from wagtail.search.index import get_indexed_models
 
 
 def group_models_by_index(backend, models):

@@ -20,7 +20,7 @@ def get_search_backend_config():
 
     # Make sure the default backend is always defined
     search_backends.setdefault('default', {
-        'BACKEND': 'wagtail.wagtailsearch.backends.db',
+        'BACKEND': 'wagtail.search.backends.db',
     })
 
     return search_backends
@@ -31,8 +31,8 @@ def import_backend(dotted_path):
     Theres two formats for the dotted_path.
     One with the backend class (old) and one without (new)
     eg:
-      old: wagtail.wagtailsearch.backends.elasticsearch.ElasticsearchSearchBackend
-      new: wagtail.wagtailsearch.backends.elasticsearch
+      old: wagtail.search.backends.elasticsearch.ElasticsearchSearchBackend
+      new: wagtail.search.backends.elasticsearch
 
     If a new style dotted path was specified, this function would
     look for a backend class from the "SearchBackend" attribute.

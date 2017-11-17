@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals
 from django.db import models
 from django.db.models.expressions import Value
 
-from wagtail.wagtailsearch.backends.base import (
+from wagtail.search.backends.base import (
     BaseSearchBackend, BaseSearchQuery, BaseSearchResults)
 
 

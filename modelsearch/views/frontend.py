@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 from wagtail.core import models
-from wagtail.wagtailsearch.models import Query
+from wagtail.search.models import Query
 
 
 def search(

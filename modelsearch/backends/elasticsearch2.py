@@ -12,9 +12,9 @@ from elasticsearch import Elasticsearch, NotFoundError
 from elasticsearch.helpers import bulk
 
 from wagtail.utils.utils import deep_update
-from wagtail.wagtailsearch.backends.base import (
+from wagtail.search.backends.base import (
     BaseSearchBackend, BaseSearchQuery, BaseSearchResults)
-from wagtail.wagtailsearch.index import (
+from wagtail.search.index import (
     FilterField, Indexed, RelatedFields, SearchField, class_is_indexed)
 
 

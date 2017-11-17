@@ -5,7 +5,7 @@ from django.db.models.lookups import Lookup
 from django.db.models.query import QuerySet
 from django.db.models.sql.where import SubqueryConstraint, WhereNode
 
-from wagtail.wagtailsearch.index import class_is_indexed
+from wagtail.search.index import class_is_indexed
 
 
 class FilterError(Exception):

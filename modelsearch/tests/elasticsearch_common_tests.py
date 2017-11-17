@@ -22,7 +22,7 @@ class ElasticsearchCommonSearchBackendTests(object):
         """
         Not all lookup types are supported by the Elasticsearch backends
         """
-        from wagtail.wagtailsearch.backends.base import FilterError
+        from wagtail.search.backends.base import FilterError
 
         with self.assertRaises(FilterError):
             list(self.backend.search("Hello", models.Book.objects.filter(title__iregex='h(ea)llo')))

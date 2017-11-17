@@ -11,7 +11,7 @@ from django.test import TestCase
 from elasticsearch.serializer import JSONSerializer
 
 from wagtail.tests.search import models
-from wagtail.wagtailsearch.backends.elasticsearch2 import (
+from wagtail.search.backends.elasticsearch2 import (
     Elasticsearch2SearchBackend, get_model_root)
 
 from .elasticsearch_common_tests import ElasticsearchCommonSearchBackendTests
@@ -19,7 +19,7 @@ from .test_backends import BackendTests
 
 
 class TestElasticsearch2SearchBackend(BackendTests, ElasticsearchCommonSearchBackendTests, TestCase):
-    backend_path = 'wagtail.wagtailsearch.backends.elasticsearch2'
+    backend_path = 'wagtail.search.backends.elasticsearch2'
 
     # Broken
     @unittest.expectedFailure

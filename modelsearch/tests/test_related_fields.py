@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from wagtail.tests.search.models import Book, Novel
 from wagtail.tests.testapp.models import Advert, ManyToManyBlogPage
-from wagtail.wagtailsearch import index
+from wagtail.search import index
 
 
 class TestSelectOnQuerySet(TestCase):
