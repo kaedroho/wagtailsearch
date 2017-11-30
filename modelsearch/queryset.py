@@ -1,9 +1,8 @@
-from __future__ import absolute_import, unicode_literals
-
-from wagtail.wagtailsearch.backends import get_search_backend
+from wagtail.search.backends import get_search_backend
 
 
-class SearchableQuerySetMixin(object):
+
+class SearchableQuerySetMixin:
     def search(self, query, fields=None,
                operator=None, order_by_relevance=True, backend='default'):
         """

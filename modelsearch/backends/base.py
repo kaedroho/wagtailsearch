@@ -1,14 +1,12 @@
 
-from __future__ import absolute_import, unicode_literals
-
 from warnings import warn
 
 from django.db.models.lookups import Lookup
 from django.db.models.query import QuerySet
 from django.db.models.sql.where import SubqueryConstraint, WhereNode
 
-from wagtail.wagtailsearch.index import class_is_indexed
-from wagtail.wagtailsearch.query import MATCH_ALL, PlainText
+from wagtail.search.index import class_is_indexed
+from wagtail.search.query import MATCH_ALL, PlainText
 
 
 class FilterError(Exception):
@@ -19,7 +17,7 @@ class FieldError(Exception):
     pass
 
 
-class BaseSearchQueryCompiler(object):
+class BaseSearchQueryCompiler:
     DEFAULT_OPERATOR = 'or'
 
     def __init__(self, queryset, query, fields=None, operator=None, order_by_relevance=True):
@@ -103,7 +101,7 @@ class BaseSearchQueryCompiler(object):
         return self._get_filters_from_where_node(self.queryset.query.where)
 
 
-class BaseSearchResults(object):
+class BaseSearchResults:
     def __init__(self, backend, query_compiler, prefetch_related=None):
         self.backend = backend
         self.query_compiler = query_compiler
@@ -197,7 +195,7 @@ class BaseSearchResults(object):
 
 class EmptySearchResults(BaseSearchResults):
     def __init__(self):
-        return super(EmptySearchResults, self).__init__(None, None)
+        return super().__init__(None, None)
 
     def _clone(self):
         return self.__class__()
@@ -209,7 +207,7 @@ class EmptySearchResults(BaseSearchResults):
         return 0
 
 
-class BaseSearchBackend(object):
+class BaseSearchBackend:
     query_compiler_class = None
     results_class = None
     rebuilder_class = None

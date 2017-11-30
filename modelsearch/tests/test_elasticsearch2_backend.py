@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
 import datetime
 import json
 
@@ -10,15 +8,15 @@ from django.test import TestCase
 from elasticsearch.serializer import JSONSerializer
 
 from wagtail.tests.search import models
-from wagtail.wagtailsearch.backends.elasticsearch2 import (
+from wagtail.search.backends.elasticsearch2 import (
     Elasticsearch2SearchBackend, get_model_root)
-from wagtail.wagtailsearch.query import MATCH_ALL
+from wagtail.search.query import MATCH_ALL
 
 from .elasticsearch_common_tests import ElasticsearchCommonSearchBackendTests
 
 
 class TestElasticsearch2SearchBackend(ElasticsearchCommonSearchBackendTests, TestCase):
-    backend_path = 'wagtail.wagtailsearch.backends.elasticsearch2'
+    backend_path = 'wagtail.search.backends.elasticsearch2'
 
 
 class TestElasticsearch2SearchQuery(TestCase):
@@ -768,19 +766,19 @@ class TestBackendConfiguration(TestCase):
 
 class TestGetModelRoot(TestCase):
     def test_root_model(self):
-        from wagtail.wagtailcore.models import Page
+        from wagtail.core.models import Page
 
         self.assertEqual(get_model_root(Page), Page)
 
     def test_child_model(self):
-        from wagtail.wagtailcore.models import Page
+        from wagtail.core.models import Page
         from wagtail.tests.testapp.models import SimplePage
 
         self.assertEqual(get_model_root(SimplePage), Page)
 
     def test_grandchild_model(self):
         # MTIChildPage inherits from MTIBasePage which inherits from Page
-        from wagtail.wagtailcore.models import Page
+        from wagtail.core.models import Page
         from wagtail.tests.testapp.models import MTIChildPage
 
         self.assertEqual(get_model_root(MTIChildPage), Page)

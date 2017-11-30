@@ -1,12 +1,10 @@
-from __future__ import absolute_import, unicode_literals
-
 from django.conf import settings
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from wagtail.wagtailcore import models
-from wagtail.wagtailsearch.models import Query
+from wagtail.core import models
+from wagtail.search.models import Query
 
 
 def search(

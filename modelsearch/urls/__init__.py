@@ -1,1 +1,1 @@
-from wagtail.wagtailsearch.urls.frontend import urlpatterns  # noqa
+from wagtail.search.urls.frontend import urlpatterns  # noqa

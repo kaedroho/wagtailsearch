@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 import unittest
 from datetime import date
 from io import StringIO
@@ -7,8 +5,8 @@ from io import StringIO
 from django.core import management
 
 from wagtail.tests.search import models
-from wagtail.wagtailsearch.query import MATCH_ALL
-from wagtail.wagtailsearch.tests.test_backends import BackendTests
+from wagtail.search.query import MATCH_ALL
+from wagtail.search.tests.test_backends import BackendTests
 
 
 class ElasticsearchCommonSearchBackendTests(BackendTests):
@@ -25,7 +23,7 @@ class ElasticsearchCommonSearchBackendTests(BackendTests):
         """
         Not all lookup types are supported by the Elasticsearch backends
         """
-        from wagtail.wagtailsearch.backends.base import FilterError
+        from wagtail.search.backends.base import FilterError
 
         with self.assertRaises(FilterError):
             list(self.backend.search("Hello", models.Book.objects.filter(title__iregex='h(ea)llo')))

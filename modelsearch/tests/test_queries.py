@@ -1,15 +1,13 @@
-from __future__ import absolute_import, unicode_literals
-
 import datetime
 from io import StringIO
 
 from django.core import management
 from django.test import SimpleTestCase, TestCase
 
-from wagtail.contrib.wagtailsearchpromotions.models import SearchPromotion
+from wagtail.contrib.search_promotions.models import SearchPromotion
 from wagtail.tests.utils import WagtailTestUtils
-from wagtail.wagtailsearch import models
-from wagtail.wagtailsearch.utils import normalise_query_string, separate_filters_from_query
+from wagtail.search import models
+from wagtail.search.utils import normalise_query_string, separate_filters_from_query
 
 
 class TestHitCounter(TestCase):

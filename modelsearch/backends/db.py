@@ -1,14 +1,12 @@
-from __future__ import absolute_import, unicode_literals
-
 from warnings import warn
 
 from django.db import models
 from django.db.models.expressions import Value
 
-from wagtail.wagtailsearch.backends.base import (
+from wagtail.search.backends.base import (
     BaseSearchBackend, BaseSearchQueryCompiler, BaseSearchResults)
-from wagtail.wagtailsearch.query import And, MatchAll, Not, Or, SearchQueryShortcut, Term
-from wagtail.wagtailsearch.utils import AND, OR
+from wagtail.search.query import And, MatchAll, Not, Or, SearchQueryShortcut, Term
+from wagtail.search.utils import AND, OR
 
 
 class DatabaseSearchQueryCompiler(BaseSearchQueryCompiler):

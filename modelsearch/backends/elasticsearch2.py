@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 import copy
 import json
 from urllib.parse import urlparse
@@ -12,11 +10,11 @@ from elasticsearch import Elasticsearch, NotFoundError
 from elasticsearch.helpers import bulk
 
 from wagtail.utils.utils import deep_update
-from wagtail.wagtailsearch.backends.base import (
+from wagtail.search.backends.base import (
     BaseSearchBackend, BaseSearchQueryCompiler, BaseSearchResults)
-from wagtail.wagtailsearch.index import (
+from wagtail.search.index import (
     FilterField, Indexed, RelatedFields, SearchField, class_is_indexed)
-from wagtail.wagtailsearch.query import MatchAll, PlainText
+from wagtail.search.query import MatchAll, PlainText
 
 
 def get_model_root(model):
@@ -43,7 +41,7 @@ def get_model_root(model):
     return model
 
 
-class Elasticsearch2Mapping(object):
+class Elasticsearch2Mapping:
     type_map = {
         'AutoField': 'integer',
         'BinaryField': 'binary',
@@ -623,7 +621,7 @@ class Elasticsearch2SearchResults(BaseSearchResults):
         return max(hit_count, 0)
 
 
-class Elasticsearch2Index(object):
+class Elasticsearch2Index:
     def __init__(self, backend, name):
         self.backend = backend
         self.es = backend.es
@@ -743,7 +741,7 @@ class Elasticsearch2Index(object):
         self.put()
 
 
-class ElasticsearchIndexRebuilder(object):
+class ElasticsearchIndexRebuilder:
     def __init__(self, index):
         self.index = index
 

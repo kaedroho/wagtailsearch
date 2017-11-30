@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import, unicode_literals
-
 import datetime
 import json
 import unittest
@@ -11,14 +9,14 @@ from django.test import TestCase
 from elasticsearch.serializer import JSONSerializer
 
 from wagtail.tests.search import models
-from wagtail.wagtailsearch.backends.elasticsearch5 import Elasticsearch5SearchBackend
-from wagtail.wagtailsearch.query import MATCH_ALL
+from wagtail.search.backends.elasticsearch5 import Elasticsearch5SearchBackend
+from wagtail.search.query import MATCH_ALL
 
 from .elasticsearch_common_tests import ElasticsearchCommonSearchBackendTests
 
 
 class TestElasticsearch5SearchBackend(ElasticsearchCommonSearchBackendTests, TestCase):
-    backend_path = 'wagtail.wagtailsearch.backends.elasticsearch5'
+    backend_path = 'wagtail.search.backends.elasticsearch5'
 
     # Broken
     @unittest.expectedFailure

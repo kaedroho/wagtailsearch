@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 import inspect
 import logging
 
@@ -9,12 +7,12 @@ from django.db import models
 from django.db.models.fields import FieldDoesNotExist
 from django.db.models.fields.related import ForeignObjectRel, OneToOneRel, RelatedField
 
-from wagtail.wagtailsearch.backends import get_search_backends_with_name
+from wagtail.search.backends import get_search_backends_with_name
 
 logger = logging.getLogger('wagtail.search.index')
 
 
-class Indexed(object):
+class Indexed:
     @classmethod
     def indexed_get_parent(cls, require_model=True):
         for base in cls.__bases__:
@@ -163,7 +161,7 @@ def remove_object(instance):
                 logger.exception("Exception raised while deleting %r from the '%s' search backend", indexed_instance, backend_name)
 
 
-class BaseField(object):
+class BaseField:
     def __init__(self, field_name, **kwargs):
         self.field_name = field_name
         self.kwargs = kwargs
@@ -217,7 +215,7 @@ class BaseField(object):
 
 class SearchField(BaseField):
     def __init__(self, field_name, boost=None, partial_match=False, **kwargs):
-        super(SearchField, self).__init__(field_name, **kwargs)
+        super().__init__(field_name, **kwargs)
         self.boost = boost
         self.partial_match = partial_match
 
@@ -226,7 +224,7 @@ class FilterField(BaseField):
     pass
 
 
-class RelatedFields(object):
+class RelatedFields:
     def __init__(self, field_name, fields):
         self.field_name = field_name
         self.fields = fields

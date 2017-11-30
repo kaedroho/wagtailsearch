@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 from datetime import date
 
 import mock
@@ -8,8 +6,8 @@ from django.test import TestCase, override_settings
 from wagtail.tests.search import models
 from wagtail.tests.testapp.models import SimplePage
 from wagtail.tests.utils import WagtailTestUtils
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailsearch import index
+from wagtail.core.models import Page
+from wagtail.search import index
 
 
 class TestGetIndexedInstance(TestCase):
@@ -43,10 +41,10 @@ class TestGetIndexedInstance(TestCase):
         self.assertEqual(indexed_instance, None)
 
 
-@mock.patch('wagtail.wagtailsearch.tests.DummySearchBackend', create=True)
+@mock.patch('wagtail.search.tests.DummySearchBackend', create=True)
 @override_settings(WAGTAILSEARCH_BACKENDS={
     'default': {
-        'BACKEND': 'wagtail.wagtailsearch.tests.DummySearchBackend'
+        'BACKEND': 'wagtail.search.tests.DummySearchBackend'
     }
 })
 class TestInsertOrUpdateObject(TestCase, WagtailTestUtils):
@@ -95,10 +93,10 @@ class TestInsertOrUpdateObject(TestCase, WagtailTestUtils):
         self.assertIn("ValueError: Test", cm.output[0])
 
 
-@mock.patch('wagtail.wagtailsearch.tests.DummySearchBackend', create=True)
+@mock.patch('wagtail.search.tests.DummySearchBackend', create=True)
 @override_settings(WAGTAILSEARCH_BACKENDS={
     'default': {
-        'BACKEND': 'wagtail.wagtailsearch.tests.DummySearchBackend'
+        'BACKEND': 'wagtail.search.tests.DummySearchBackend'
     }
 })
 class TestRemoveObject(TestCase, WagtailTestUtils):
@@ -133,10 +131,10 @@ class TestRemoveObject(TestCase, WagtailTestUtils):
         self.assertIn("ValueError: Test", cm.output[0])
 
 
-@mock.patch('wagtail.wagtailsearch.tests.DummySearchBackend', create=True)
+@mock.patch('wagtail.search.tests.DummySearchBackend', create=True)
 @override_settings(WAGTAILSEARCH_BACKENDS={
     'default': {
-        'BACKEND': 'wagtail.wagtailsearch.tests.DummySearchBackend'
+        'BACKEND': 'wagtail.search.tests.DummySearchBackend'
     }
 })
 class TestSignalHandlers(TestCase, WagtailTestUtils):

@@ -1,12 +1,10 @@
-from __future__ import absolute_import, unicode_literals
-
 from contextlib import contextmanager
 
 from django.core import checks
 from django.test import TestCase
 
 from wagtail.tests.search import models
-from wagtail.wagtailsearch import index
+from wagtail.search import index
 
 
 @contextmanager

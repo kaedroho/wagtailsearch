@@ -1,7 +1,5 @@
 # coding: utf-8
 
-from __future__ import absolute_import, unicode_literals
-
 import unittest
 from datetime import date
 from io import StringIO
@@ -13,11 +11,11 @@ from django.test.utils import override_settings
 
 from wagtail.tests.search import models
 from wagtail.tests.utils import WagtailTestUtils
-from wagtail.wagtailsearch.backends import (
+from wagtail.search.backends import (
     InvalidSearchBackendError, get_search_backend, get_search_backends)
-from wagtail.wagtailsearch.backends.base import FieldError
-from wagtail.wagtailsearch.backends.db import DatabaseSearchBackend
-from wagtail.wagtailsearch.query import MATCH_ALL, And, Boost, Filter, Not, Or, PlainText, Term
+from wagtail.search.backends.base import FieldError
+from wagtail.search.backends.db import DatabaseSearchBackend
+from wagtail.search.query import MATCH_ALL, And, Boost, Filter, Not, Or, PlainText, Term
 
 
 class BackendTests(WagtailTestUtils):
@@ -652,7 +650,7 @@ class BackendTests(WagtailTestUtils):
 
 @override_settings(
     WAGTAILSEARCH_BACKENDS={
-        'default': {'BACKEND': 'wagtail.wagtailsearch.backends.db'}
+        'default': {'BACKEND': 'wagtail.search.backends.db'}
     }
 )
 class TestBackendLoader(TestCase):
@@ -661,16 +659,16 @@ class TestBackendLoader(TestCase):
         self.assertIsInstance(db, DatabaseSearchBackend)
 
     def test_import_by_path(self):
-        db = get_search_backend(backend='wagtail.wagtailsearch.backends.db')
+        db = get_search_backend(backend='wagtail.search.backends.db')
         self.assertIsInstance(db, DatabaseSearchBackend)
 
     def test_import_by_full_path(self):
-        db = get_search_backend(backend='wagtail.wagtailsearch.backends.db.DatabaseSearchBackend')
+        db = get_search_backend(backend='wagtail.search.backends.db.DatabaseSearchBackend')
         self.assertIsInstance(db, DatabaseSearchBackend)
 
     def test_nonexistent_backend_import(self):
         self.assertRaises(
-            InvalidSearchBackendError, get_search_backend, backend='wagtail.wagtailsearch.backends.doesntexist'
+            InvalidSearchBackendError, get_search_backend, backend='wagtail.search.backends.doesntexist'
         )
 
     def test_invalid_backend_import(self):
@@ -694,10 +692,10 @@ class TestBackendLoader(TestCase):
     @override_settings(
         WAGTAILSEARCH_BACKENDS={
             'default': {
-                'BACKEND': 'wagtail.wagtailsearch.backends.db'
+                'BACKEND': 'wagtail.search.backends.db'
             },
             'another-backend': {
-                'BACKEND': 'wagtail.wagtailsearch.backends.db'
+                'BACKEND': 'wagtail.search.backends.db'
             },
         }
     )
@@ -715,7 +713,7 @@ class TestBackendLoader(TestCase):
     @override_settings(
         WAGTAILSEARCH_BACKENDS={
             'default': {
-                'BACKEND': 'wagtail.wagtailsearch.backends.db',
+                'BACKEND': 'wagtail.search.backends.db',
                 'AUTO_UPDATE': False,
             },
         }
@@ -728,7 +726,7 @@ class TestBackendLoader(TestCase):
     @override_settings(
         WAGTAILSEARCH_BACKENDS={
             'default': {
-                'BACKEND': 'wagtail.wagtailsearch.backends.db',
+                'BACKEND': 'wagtail.search.backends.db',
                 'AUTO_UPDATE': False,
             },
         }

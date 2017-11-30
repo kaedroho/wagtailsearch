@@ -1,5 +1,3 @@
-from __future__ import absolute_import, unicode_literals
-
 import datetime
 
 from django.conf import settings
@@ -7,7 +5,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from wagtail.wagtailsearch.utils import MAX_QUERY_STRING_LENGTH, normalise_query_string
+from wagtail.search.utils import MAX_QUERY_STRING_LENGTH, normalise_query_string
 
 
 class Query(models.Model):
@@ -17,7 +15,7 @@ class Query(models.Model):
         # Normalise query string
         self.query_string = normalise_query_string(self.query_string)
 
-        super(Query, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def add_hit(self, date=None):
         if date is None:
