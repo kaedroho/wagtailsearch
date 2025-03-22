@@ -1,7 +1,7 @@
 from django.test import SimpleTestCase, TestCase
 
-from wagtail.search.query import And, Or, Phrase, PlainText
-from wagtail.search.utils import (
+from modelsearch.query import And, Or, Phrase, PlainText
+from modelsearch.utils import (
     balanced_reduce,
     normalise_query_string,
     parse_query_string,

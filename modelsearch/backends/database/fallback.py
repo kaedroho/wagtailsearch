@@ -6,20 +6,20 @@ from django.db import models
 from django.db.models import Count
 from django.db.models.expressions import Value
 
-from wagtail.search.backends.base import (
+from modelsearch.backends.base import (
     BaseSearchBackend,
     BaseSearchQueryCompiler,
     BaseSearchResults,
     FilterFieldError,
 )
-from wagtail.search.query import And, Boost, MatchAll, Not, Or, Phrase, PlainText
-from wagtail.search.utils import AND, OR
+from modelsearch.query import And, Boost, MatchAll, Not, Or, Phrase, PlainText
+from modelsearch.utils import AND, OR
 
 # This file implements a database search backend using basic substring matching, and no
 # database-specific full-text search capabilities. It will be used in the following cases:
 # * The current default database is SQLite <3.19, or SQLite built without fulltext
 #   extensions, or something other than PostgreSQL, MySQL or SQLite
-# * 'wagtail.search.backends.database.fallback' is specified directly as the search backend
+# * 'modelsearch.backends.database.fallback' is specified directly as the search backend
 
 
 MATCH_ALL = "_ALL_"
@@ -248,5 +248,5 @@ class DatabaseSearchBackend(BaseSearchBackend):
         pass  # Not needed
 
 
-# This line allows using 'wagtail.search.backends.database.fallback' as the backend, bypassing the automatic selection of the backend that would get run if the user chose 'wagtail.search.backends.database'
+# This line allows using 'modelsearch.backends.database.fallback' as the backend, bypassing the automatic selection of the backend that would get run if the user chose 'modelsearch.backends.database'
 SearchBackend = DatabaseSearchBackend

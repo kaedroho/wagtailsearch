@@ -58,7 +58,7 @@ Wagtail's document and image models provide a `search` method on their QuerySets
 
 ```python
 >>> from myapp.models import Book
->>> from wagtail.search.backends import get_search_backend
+>>> from modelsearch.backends import get_search_backend
 
 # Search books
 >>> s = get_search_backend()
@@ -70,7 +70,7 @@ You can also pass a QuerySet into the `search` method, which allows you to add f
 
 ```python
 >>> from myapp.models import Book
->>> from wagtail.search.backends import get_search_backend
+>>> from modelsearch.backends import get_search_backend
 
 # Search books
 >>> s = get_search_backend()
@@ -172,7 +172,7 @@ The terms must appear together and in the same order.
 For example:
 
 ```python
->>> from wagtail.search.query import Phrase
+>>> from modelsearch.query import Phrase
 
 >>> Page.objects.search(Phrase("Hello world"))
 [<Page: Hello World>]
@@ -194,7 +194,7 @@ A maximum of one edit (transposition, insertion, or removal of a character) is p
 For example:
 
 ```python
->>> from wagtail.search.query import Fuzzy
+>>> from modelsearch.query import Fuzzy
 
 >>> Page.objects.search(Fuzzy("Hallo"))
 [<Page: Hello World>, <Page: Hello>]
@@ -226,7 +226,7 @@ It takes a query string, operator and boost.
 For example:
 
 ```python
->>> from wagtail.search.query import PlainText
+>>> from modelsearch.query import PlainText
 >>> Page.objects.search(PlainText("Hello world"))
 
 # Multiple plain text queries can be combined. This example will match both "hello world" and "Hello earth"
@@ -251,7 +251,7 @@ This class boosts the score of another query.
 For example:
 
 ```python
->>> from wagtail.search.query import PlainText, Boost
+>>> from modelsearch.query import PlainText, Boost
 
 # This example will match both the phrases "hello world" and "Hello earth" but matches for "hello world" will be ranked higher
 >>> Page.objects.search(Boost(Phrase("Hello world"), 10.0) | Phrase("Hello earth"))
@@ -273,7 +273,7 @@ typed and returns a query object and a [QueryDict](inv:django#django.http.QueryD
 For example:
 
 ```python
->>> from wagtail.search.utils import parse_query_string
+>>> from modelsearch.utils import parse_query_string
 >>> filters, query = parse_query_string('my query string "this is a phrase" this_is_a:filter key:value1 key:value2', operator='and')
 
 # Alternatively..
@@ -304,7 +304,7 @@ And([
 Here's an example of how this function can be used in a search view:
 
 ```python
-from wagtail.search.utils import parse_query_string
+from modelsearch.utils import parse_query_string
 
 def search(request):
     query_string = request.GET['query']

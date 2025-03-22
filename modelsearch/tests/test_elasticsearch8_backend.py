@@ -12,4 +12,4 @@ except ImportError:
 
 @unittest.skipIf(ELASTICSEARCH_VERSION[0] != 8, "Elasticsearch 8 required")
 class TestElasticsearch8SearchBackend(ElasticsearchCommonSearchBackendTests, TestCase):
-    backend_path = "wagtail.search.backends.elasticsearch8"
+    backend_path = "modelsearch.backends.elasticsearch8"

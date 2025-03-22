@@ -110,7 +110,7 @@ if connection.vendor == "postgresql":
     AbstractIndexEntry = AbstractPostgresIndexEntry
 
 elif connection.vendor == "sqlite":
-    from wagtail.search.backends.database.sqlite.utils import fts5_available
+    from modelsearch.backends.database.sqlite.utils import fts5_available
 
     class AbstractSQLiteIndexEntry(BaseIndexEntry):
         """

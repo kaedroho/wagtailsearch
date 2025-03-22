@@ -1,7 +1,7 @@
 from django.test import TestCase
 
-from wagtail.search import index
-from wagtail.test.search.models import Book, Novel
+from modelsearch import index
+from modelsearch.test.testapp.models import Book, Novel
 from wagtail.test.testapp.models import Advert, ManyToManyBlogPage
 
 

@@ -12,14 +12,14 @@ from elasticsearch import VERSION as ELASTICSEARCH_VERSION
 from elasticsearch import Elasticsearch, NotFoundError
 from elasticsearch.helpers import bulk
 
-from wagtail.search.backends.base import (
+from modelsearch.backends.base import (
     BaseSearchBackend,
     BaseSearchQueryCompiler,
     BaseSearchResults,
     FilterFieldError,
     get_model_root,
 )
-from wagtail.search.index import (
+from modelsearch.index import (
     AutocompleteField,
     FilterField,
     Indexed,
@@ -28,7 +28,7 @@ from wagtail.search.index import (
     class_is_indexed,
     get_indexed_models,
 )
-from wagtail.search.query import And, Boost, Fuzzy, MatchAll, Not, Or, Phrase, PlainText
+from modelsearch.query import And, Boost, Fuzzy, MatchAll, Not, Or, Phrase, PlainText
 from wagtail.utils.utils import deep_update
 
 use_new_elasticsearch_api = ELASTICSEARCH_VERSION >= (7, 15)

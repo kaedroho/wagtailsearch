@@ -2,8 +2,8 @@ from itertools import zip_longest
 
 from django.apps import apps
 
-from wagtail.search.index import Indexed
-from wagtail.search.utils import get_search_fields
+from modelsearch.index import Indexed
+from modelsearch.utils import get_search_fields
 
 # This file contains the implementation of weights for PostgreSQL tsvectors. Only PostgreSQL has support for them, so that's why we define them here.
 

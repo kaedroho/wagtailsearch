@@ -2,7 +2,7 @@
 
 from django.db import connection, migrations, models
 
-from wagtail.search.models import IndexEntry
+from modelsearch.models import IndexEntry
 
 
 # This migration takes on the base model defined in 0005_create_indexentry and adds certain fields that are specific to each database system
@@ -53,7 +53,7 @@ class Migration(migrations.Migration):
         ]
 
     elif connection.vendor == "sqlite":
-        from wagtail.search.backends.database.sqlite.utils import fts5_available
+        from modelsearch.backends.database.sqlite.utils import fts5_available
 
         operations = [
             migrations.AddField(

@@ -2,7 +2,7 @@
 
 from django.db import migrations, models
 import taggit.managers
-import wagtail.search.index
+import modelsearch.index
 
 
 class Migration(migrations.Migration):
@@ -38,6 +38,6 @@ class Migration(migrations.Migration):
                     ),
                 ),
             ],
-            bases=(wagtail.search.index.Indexed, models.Model),
+            bases=(modelsearch.index.Indexed, models.Model),
         ),
     ]

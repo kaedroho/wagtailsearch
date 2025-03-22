@@ -4,9 +4,9 @@ from django.db import connection
 from django.test import TestCase
 from django.test.utils import override_settings
 
-from wagtail.search.query import Phrase
-from wagtail.search.tests.test_backends import BackendTests
-from wagtail.test.search import models
+from modelsearch.query import Phrase
+from modelsearch.tests.test_backends import BackendTests
+from modelsearch.test.testapp import models
 
 
 @unittest.skipUnless(
@@ -15,12 +15,12 @@ from wagtail.test.search import models
 @override_settings(
     WAGTAILSEARCH_BACKENDS={
         "default": {
-            "BACKEND": "wagtail.search.backends.database.postgres.postgres",
+            "BACKEND": "modelsearch.backends.database.postgres.postgres",
         }
     }
 )
 class TestPostgresSearchBackend(BackendTests, TestCase):
-    backend_path = "wagtail.search.backends.database.postgres.postgres"
+    backend_path = "modelsearch.backends.database.postgres.postgres"
 
     def test_weights(self):
         from ..backends.database.postgres.weights import (
@@ -167,13 +167,13 @@ class TestPostgresSearchBackend(BackendTests, TestCase):
 @override_settings(
     WAGTAILSEARCH_BACKENDS={
         "default": {
-            "BACKEND": "wagtail.search.backends.database.postgres.postgres",
+            "BACKEND": "modelsearch.backends.database.postgres.postgres",
             "SEARCH_CONFIG": "dutch",
         }
     }
 )
 class TestPostgresLanguageTextSearch(TestCase):
-    backend_path = "wagtail.search.backends.database.postgres.postgres"
+    backend_path = "modelsearch.backends.database.postgres.postgres"
 
     def setUp(self):
         # get search backend by backend_path

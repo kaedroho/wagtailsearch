@@ -5,7 +5,7 @@ from django.db.models.expressions import CombinedExpression, Expression, Func, V
 from django.db.models.fields import BooleanField, Field, FloatField
 from django.db.models.sql.compiler import SQLCompiler
 
-from wagtail.search.query import And, MatchAll, Not, Or, Phrase, PlainText, SearchQuery
+from modelsearch.query import And, MatchAll, Not, Or, Phrase, PlainText, SearchQuery
 
 
 class BM25(Func):

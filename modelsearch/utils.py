@@ -6,7 +6,7 @@ from django.apps import apps
 from django.db import connections
 from django.http import QueryDict
 
-from wagtail.search.index import RelatedFields, SearchField
+from modelsearch.index import RelatedFields, SearchField
 
 from .query import MATCH_NONE, Phrase, PlainText
 

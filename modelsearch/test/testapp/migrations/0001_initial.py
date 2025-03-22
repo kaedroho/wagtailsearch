@@ -2,7 +2,7 @@
 from django.db import migrations, models
 import django.db.models.deletion
 import taggit.managers
-import wagtail.search.index
+import modelsearch.index
 
 
 class Migration(migrations.Migration):
@@ -29,7 +29,7 @@ class Migration(migrations.Migration):
                 ("name", models.CharField(max_length=255)),
                 ("date_of_birth", models.DateField(null=True)),
             ],
-            bases=(models.Model, wagtail.search.index.Indexed),
+            bases=(models.Model, modelsearch.index.Indexed),
         ),
         migrations.CreateModel(
             name="Book",
@@ -47,7 +47,7 @@ class Migration(migrations.Migration):
                 ("publication_date", models.DateField()),
                 ("number_of_pages", models.IntegerField()),
             ],
-            bases=(models.Model, wagtail.search.index.Indexed),
+            bases=(models.Model, modelsearch.index.Indexed),
         ),
         migrations.CreateModel(
             name="Character",

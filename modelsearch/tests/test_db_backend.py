@@ -9,12 +9,12 @@ from .test_backends import BackendTests
 @override_settings(
     WAGTAILSEARCH_BACKENDS={
         "default": {
-            "BACKEND": "wagtail.search.backends.database.fallback",
+            "BACKEND": "modelsearch.backends.database.fallback",
         }
     }
 )
 class TestDBBackend(BackendTests, TestCase):
-    backend_path = "wagtail.search.backends.database.fallback"
+    backend_path = "modelsearch.backends.database.fallback"
 
     # Doesn't support ranking
     @unittest.expectedFailure

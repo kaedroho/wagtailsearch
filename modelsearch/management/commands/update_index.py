@@ -4,8 +4,8 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from wagtail.search.backends import get_search_backend
-from wagtail.search.index import get_indexed_models
+from modelsearch.backends import get_search_backend
+from modelsearch.index import get_indexed_models
 
 DEFAULT_CHUNK_SIZE = 1000
 

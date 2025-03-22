@@ -6,8 +6,8 @@ from unittest import mock
 from django.db.models import Q
 from django.test import TestCase
 
-from wagtail.search.query import MATCH_ALL, Fuzzy, Phrase
-from wagtail.test.search import models
+from modelsearch.query import MATCH_ALL, Fuzzy, Phrase
+from modelsearch.test.testapp import models
 
 from .elasticsearch_common_tests import ElasticsearchCommonSearchBackendTests
 
@@ -15,7 +15,7 @@ try:
     from elasticsearch import VERSION as ELASTICSEARCH_VERSION
     from elasticsearch.serializer import JSONSerializer
 
-    from wagtail.search.backends.elasticsearch7 import Elasticsearch7SearchBackend
+    from modelsearch.backends.elasticsearch7 import Elasticsearch7SearchBackend
 except ImportError:
     ELASTICSEARCH_VERSION = (0, 0, 0)
 
@@ -32,7 +32,7 @@ else:
 
 @unittest.skipIf(ELASTICSEARCH_VERSION[0] != 7, "Elasticsearch 7 required")
 class TestElasticsearch7SearchBackend(ElasticsearchCommonSearchBackendTests, TestCase):
-    backend_path = "wagtail.search.backends.elasticsearch7"
+    backend_path = "modelsearch.backends.elasticsearch7"
 
 
 @unittest.skipIf(ELASTICSEARCH_VERSION[0] != 7, "Elasticsearch 7 required")
@@ -1355,7 +1355,7 @@ class TestElasticsearch7MappingInheritance(TestCase):
 
 
 @unittest.skipIf(ELASTICSEARCH_VERSION[0] != 7, "Elasticsearch 7 required")
-@mock.patch("wagtail.search.backends.elasticsearch7.Elasticsearch")
+@mock.patch("modelsearch.backends.elasticsearch7.Elasticsearch")
 class TestBackendConfiguration(TestCase):
     def test_default_settings(self, Elasticsearch):
         Elasticsearch7SearchBackend(params={})

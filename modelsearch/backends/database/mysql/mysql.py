@@ -20,26 +20,26 @@ from django.db.models.query_utils import Q
 from django.utils.encoding import force_str
 from django.utils.functional import cached_property
 
-from wagtail.search.backends.base import (
+from modelsearch.backends.base import (
     BaseSearchBackend,
     BaseSearchQueryCompiler,
     BaseSearchResults,
     FilterFieldError,
 )
-from wagtail.search.backends.database.mysql.query import (
+from modelsearch.backends.database.mysql.query import (
     Lexeme,
     MatchExpression,
     SearchQuery,
 )
-from wagtail.search.index import (
+from modelsearch.index import (
     AutocompleteField,
     RelatedFields,
     SearchField,
     get_indexed_models,
 )
-from wagtail.search.models import IndexEntry
-from wagtail.search.query import And, Boost, MatchAll, Not, Or, Phrase, PlainText
-from wagtail.search.utils import (
+from modelsearch.models import IndexEntry
+from modelsearch.query import And, Boost, MatchAll, Not, Or, Phrase, PlainText
+from modelsearch.utils import (
     OR,
     balanced_reduce,
     get_content_type_pk,

@@ -6,8 +6,8 @@ from django.db import connection
 from django.test.testcases import TestCase
 from django.test.utils import override_settings
 
-from wagtail.search.backends.database.sqlite.utils import fts5_available
-from wagtail.search.tests.test_backends import BackendTests
+from modelsearch.backends.database.sqlite.utils import fts5_available
+from modelsearch.tests.test_backends import BackendTests
 
 
 @unittest.skipUnless(
@@ -20,12 +20,12 @@ from wagtail.search.tests.test_backends import BackendTests
 @override_settings(
     WAGTAILSEARCH_BACKENDS={
         "default": {
-            "BACKEND": "wagtail.search.backends.database.sqlite.sqlite",
+            "BACKEND": "modelsearch.backends.database.sqlite.sqlite",
         }
     }
 )
 class TestSQLiteSearchBackend(BackendTests, TestCase):
-    backend_path = "wagtail.search.backends.database.sqlite.sqlite"
+    backend_path = "modelsearch.backends.database.sqlite.sqlite"
 
     @skip("The SQLite backend doesn't support boosting.")
     def test_search_boosting_on_related_fields(self):

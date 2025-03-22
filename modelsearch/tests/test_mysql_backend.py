@@ -5,21 +5,21 @@ from django.db import connection
 from django.test.testcases import TransactionTestCase
 from django.test.utils import override_settings
 
-from wagtail.search.query import Not, PlainText
-from wagtail.search.tests.test_backends import BackendTests
-from wagtail.test.search import models
+from modelsearch.query import Not, PlainText
+from modelsearch.tests.test_backends import BackendTests
+from modelsearch.test.testapp import models
 
 
 @unittest.skipUnless(connection.vendor == "mysql", "The current database is not MySQL")
 @override_settings(
     WAGTAILSEARCH_BACKENDS={
         "default": {
-            "BACKEND": "wagtail.search.backends.database.mysql.mysql",
+            "BACKEND": "modelsearch.backends.database.mysql.mysql",
         }
     }
 )
 class TestMySQLSearchBackend(BackendTests, TransactionTestCase):
-    backend_path = "wagtail.search.backends.database.mysql.mysql"
+    backend_path = "modelsearch.backends.database.mysql.mysql"
 
     # Overrides parent method, because there's a slight difference in what the MySQL backend supports/accepts as search queries.
     def test_not(self):
@@ -144,7 +144,7 @@ class TestMySQLSearchBackend(BackendTests, TransactionTestCase):
         )
 
     def test_lexeme_validation(self):
-        from wagtail.search.backends.database.mysql.query import Lexeme
+        from modelsearch.backends.database.mysql.query import Lexeme
 
         with self.assertRaisesMessage(ValueError, "Lexeme value cannot be empty."):
             Lexeme("")

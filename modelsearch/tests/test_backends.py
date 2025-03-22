@@ -12,16 +12,16 @@ from django.test import TestCase
 from django.test.utils import override_settings
 from taggit.models import Tag
 
-from wagtail.search.backends import (
+from modelsearch.backends import (
     InvalidSearchBackendError,
     get_search_backend,
     get_search_backends,
 )
-from wagtail.search.backends.base import BaseSearchBackend, FieldError, FilterFieldError
-from wagtail.search.backends.database.fallback import DatabaseSearchBackend
-from wagtail.search.backends.database.sqlite.utils import fts5_available
-from wagtail.search.models import IndexEntry
-from wagtail.search.query import (
+from modelsearch.backends.base import BaseSearchBackend, FieldError, FilterFieldError
+from modelsearch.backends.database.fallback import DatabaseSearchBackend
+from modelsearch.backends.database.sqlite.utils import fts5_available
+from modelsearch.models import IndexEntry
+from modelsearch.query import (
     MATCH_ALL,
     MATCH_NONE,
     And,
@@ -31,7 +31,7 @@ from wagtail.search.query import (
     Phrase,
     PlainText,
 )
-from wagtail.test.search import models
+from modelsearch.test.testapp import models
 from wagtail.test.utils import WagtailTestUtils
 
 
@@ -996,26 +996,26 @@ class BackendTests(WagtailTestUtils):
 
 
 @override_settings(
-    WAGTAILSEARCH_BACKENDS={"default": {"BACKEND": "wagtail.search.backends.database"}}
+    WAGTAILSEARCH_BACKENDS={"default": {"BACKEND": "modelsearch.backends.database"}}
 )
 class TestBackendLoader(TestCase):
-    @mock.patch("wagtail.search.backends.database.connection")
+    @mock.patch("modelsearch.backends.database.connection")
     def test_import_by_name_unknown_db_vendor(self, connection):
         connection.vendor = "unknown"
         db = get_search_backend(backend="default")
         self.assertIsInstance(db, DatabaseSearchBackend)
 
-    @mock.patch("wagtail.search.backends.database.connection")
+    @mock.patch("modelsearch.backends.database.connection")
     def test_import_by_path_unknown_db_vendor(self, connection):
         connection.vendor = "unknown"
-        db = get_search_backend(backend="wagtail.search.backends.database")
+        db = get_search_backend(backend="modelsearch.backends.database")
         self.assertIsInstance(db, DatabaseSearchBackend)
 
-    @mock.patch("wagtail.search.backends.database.connection")
+    @mock.patch("modelsearch.backends.database.connection")
     def test_import_by_full_path_unknown_db_vendor(self, connection):
         connection.vendor = "unknown"
         db = get_search_backend(
-            backend="wagtail.search.backends.database.SearchBackend"
+            backend="modelsearch.backends.database.SearchBackend"
         )
         self.assertIsInstance(db, DatabaseSearchBackend)
 
@@ -1024,7 +1024,7 @@ class TestBackendLoader(TestCase):
         "Only applicable to PostgreSQL database systems",
     )
     def test_import_by_name_postgres_db_vendor(self):
-        from wagtail.search.backends.database.postgres.postgres import (
+        from modelsearch.backends.database.postgres.postgres import (
             PostgresSearchBackend,
         )
 
@@ -1036,11 +1036,11 @@ class TestBackendLoader(TestCase):
         "Only applicable to PostgreSQL database systems",
     )
     def test_import_by_path_postgres_db_vendor(self):
-        from wagtail.search.backends.database.postgres.postgres import (
+        from modelsearch.backends.database.postgres.postgres import (
             PostgresSearchBackend,
         )
 
-        db = get_search_backend(backend="wagtail.search.backends.database")
+        db = get_search_backend(backend="modelsearch.backends.database")
         self.assertIsInstance(db, PostgresSearchBackend)
 
     @unittest.skipIf(
@@ -1048,12 +1048,12 @@ class TestBackendLoader(TestCase):
         "Only applicable to PostgreSQL database systems",
     )
     def test_import_by_full_path_postgres_db_vendor(self):
-        from wagtail.search.backends.database.postgres.postgres import (
+        from modelsearch.backends.database.postgres.postgres import (
             PostgresSearchBackend,
         )
 
         db = get_search_backend(
-            backend="wagtail.search.backends.database.SearchBackend"
+            backend="modelsearch.backends.database.SearchBackend"
         )
         self.assertIsInstance(db, PostgresSearchBackend)
 
@@ -1061,7 +1061,7 @@ class TestBackendLoader(TestCase):
         connection.vendor != "mysql", "Only applicable to MySQL database systems"
     )
     def test_import_by_name_mysql_db_vendor(self):
-        from wagtail.search.backends.database.mysql.mysql import MySQLSearchBackend
+        from modelsearch.backends.database.mysql.mysql import MySQLSearchBackend
 
         db = get_search_backend(backend="default")
         self.assertIsInstance(db, MySQLSearchBackend)
@@ -1070,19 +1070,19 @@ class TestBackendLoader(TestCase):
         connection.vendor != "mysql", "Only applicable to MySQL database systems"
     )
     def test_import_by_path_mysql_db_vendor(self):
-        from wagtail.search.backends.database.mysql.mysql import MySQLSearchBackend
+        from modelsearch.backends.database.mysql.mysql import MySQLSearchBackend
 
-        db = get_search_backend(backend="wagtail.search.backends.database")
+        db = get_search_backend(backend="modelsearch.backends.database")
         self.assertIsInstance(db, MySQLSearchBackend)
 
     @unittest.skipIf(
         connection.vendor != "mysql", "Only applicable to MySQL database systems"
     )
     def test_import_by_full_path_mysql_db_vendor(self):
-        from wagtail.search.backends.database.mysql.mysql import MySQLSearchBackend
+        from modelsearch.backends.database.mysql.mysql import MySQLSearchBackend
 
         db = get_search_backend(
-            backend="wagtail.search.backends.database.SearchBackend"
+            backend="modelsearch.backends.database.SearchBackend"
         )
         self.assertIsInstance(db, MySQLSearchBackend)
 
@@ -1092,12 +1092,12 @@ class TestBackendLoader(TestCase):
     def test_import_by_name_sqlite_db_vendor(self):
         # This should return the fallback backend, because the SQLite backend doesn't support versions less than 3.19.0
         if not fts5_available():
-            from wagtail.search.backends.database.fallback import DatabaseSearchBackend
+            from modelsearch.backends.database.fallback import DatabaseSearchBackend
 
             db = get_search_backend(backend="default")
             self.assertIsInstance(db, DatabaseSearchBackend)
         else:
-            from wagtail.search.backends.database.sqlite.sqlite import (
+            from modelsearch.backends.database.sqlite.sqlite import (
                 SQLiteSearchBackend,
             )
 
@@ -1110,16 +1110,16 @@ class TestBackendLoader(TestCase):
     def test_import_by_path_sqlite_db_vendor(self):
         # Same as above
         if not fts5_available():
-            from wagtail.search.backends.database.fallback import DatabaseSearchBackend
+            from modelsearch.backends.database.fallback import DatabaseSearchBackend
 
-            db = get_search_backend(backend="wagtail.search.backends.database")
+            db = get_search_backend(backend="modelsearch.backends.database")
             self.assertIsInstance(db, DatabaseSearchBackend)
         else:
-            from wagtail.search.backends.database.sqlite.sqlite import (
+            from modelsearch.backends.database.sqlite.sqlite import (
                 SQLiteSearchBackend,
             )
 
-            db = get_search_backend(backend="wagtail.search.backends.database")
+            db = get_search_backend(backend="modelsearch.backends.database")
             self.assertIsInstance(db, SQLiteSearchBackend)
 
     @unittest.skipIf(
@@ -1128,19 +1128,19 @@ class TestBackendLoader(TestCase):
     def test_import_by_full_path_sqlite_db_vendor(self):
         # Same as above
         if not fts5_available():
-            from wagtail.search.backends.database.fallback import DatabaseSearchBackend
+            from modelsearch.backends.database.fallback import DatabaseSearchBackend
 
             db = get_search_backend(
-                backend="wagtail.search.backends.database.SearchBackend"
+                backend="modelsearch.backends.database.SearchBackend"
             )
             self.assertIsInstance(db, DatabaseSearchBackend)
         else:
-            from wagtail.search.backends.database.sqlite.sqlite import (
+            from modelsearch.backends.database.sqlite.sqlite import (
                 SQLiteSearchBackend,
             )
 
             db = get_search_backend(
-                backend="wagtail.search.backends.database.SearchBackend"
+                backend="modelsearch.backends.database.SearchBackend"
             )
             self.assertIsInstance(db, SQLiteSearchBackend)
 
@@ -1148,7 +1148,7 @@ class TestBackendLoader(TestCase):
         self.assertRaises(
             InvalidSearchBackendError,
             get_search_backend,
-            backend="wagtail.search.backends.doesntexist",
+            backend="modelsearch.backends.doesntexist",
         )
 
     def test_invalid_backend_import(self):
@@ -1173,8 +1173,8 @@ class TestBackendLoader(TestCase):
 
     @override_settings(
         WAGTAILSEARCH_BACKENDS={
-            "default": {"BACKEND": "wagtail.search.backends.database"},
-            "another-backend": {"BACKEND": "wagtail.search.backends.database"},
+            "default": {"BACKEND": "modelsearch.backends.database"},
+            "another-backend": {"BACKEND": "modelsearch.backends.database"},
         }
     )
     def test_get_search_backends_multiple(self):
@@ -1191,7 +1191,7 @@ class TestBackendLoader(TestCase):
     @override_settings(
         WAGTAILSEARCH_BACKENDS={
             "default": {
-                "BACKEND": "wagtail.search.backends.database",
+                "BACKEND": "modelsearch.backends.database",
                 "AUTO_UPDATE": False,
             },
         }
@@ -1204,7 +1204,7 @@ class TestBackendLoader(TestCase):
     @override_settings(
         WAGTAILSEARCH_BACKENDS={
             "default": {
-                "BACKEND": "wagtail.search.backends.database",
+                "BACKEND": "modelsearch.backends.database",
                 "AUTO_UPDATE": False,
             },
         }

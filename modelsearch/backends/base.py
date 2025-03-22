@@ -7,8 +7,8 @@ from django.db.models.lookups import Lookup
 from django.db.models.query import QuerySet
 from django.db.models.sql.where import NothingNode, WhereNode
 
-from wagtail.search.index import class_is_indexed, get_indexed_models
-from wagtail.search.query import MATCH_ALL, PlainText
+from modelsearch.index import class_is_indexed, get_indexed_models
+from modelsearch.query import MATCH_ALL, PlainText
 
 
 class FilterError(Exception):

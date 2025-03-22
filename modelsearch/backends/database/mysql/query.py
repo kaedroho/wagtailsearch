@@ -244,7 +244,7 @@ class MatchExpression(Expression):
                 "title",
                 "body",
             ]
-        )  # We need to provide a default list of columns if the user doesn't specify one. We have a joint index for for 'title' and 'body' (see wagtail.search.migrations.0006_customise_indexentry), so we'll pick that one.
+        )  # We need to provide a default list of columns if the user doesn't specify one. We have a joint index for for 'title' and 'body' (see modelsearch.migrations.0006_customise_indexentry), so we'll pick that one.
 
     def as_sql(self, compiler, connection):
         compiled_query = compiler.compile(self.query)  # Compile the query to a string

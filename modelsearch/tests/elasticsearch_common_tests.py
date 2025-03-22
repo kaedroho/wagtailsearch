@@ -3,9 +3,9 @@ from io import StringIO
 
 from django.core import management
 
-from wagtail.search.query import MATCH_ALL
-from wagtail.search.tests.test_backends import BackendTests
-from wagtail.test.search import models
+from modelsearch.query import MATCH_ALL
+from modelsearch.tests.test_backends import BackendTests
+from modelsearch.test.testapp import models
 
 
 class ElasticsearchCommonSearchBackendTests(BackendTests):
@@ -22,7 +22,7 @@ class ElasticsearchCommonSearchBackendTests(BackendTests):
         """
         Not all lookup types are supported by the Elasticsearch backends
         """
-        from wagtail.search.backends.base import FilterError
+        from modelsearch.backends.base import FilterError
 
         with self.assertRaises(FilterError):
             list(
@@ -244,7 +244,7 @@ class ElasticsearchCommonSearchBackendTests(BackendTests):
 
     def test_cannot_filter_on_date_parts_other_than_year(self):
         # Filtering by date not supported, should throw a FilterError
-        from wagtail.search.backends.base import FilterError
+        from modelsearch.backends.base import FilterError
 
         in_jan = models.Book.objects.filter(publication_date__month=1)
         with self.assertRaises(FilterError):

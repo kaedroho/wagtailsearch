@@ -1,7 +1,7 @@
 from django.apps import apps
 from django_tasks import task
 
-from wagtail.search import index
+from modelsearch import index
 
 
 @task()

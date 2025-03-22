@@ -16,7 +16,7 @@ If the search index is kept separate from the database (when using Elasticsearch
 
 ### Signal handlers
 
-`wagtailsearch` provides some signal handlers which bind to the save/delete signals of all indexed models. This would automatically add and delete them from all backends you have registered in `WAGTAILSEARCH_BACKENDS`. These signal handlers are automatically registered when the `wagtail.search` app is loaded.
+`wagtailsearch` provides some signal handlers which bind to the save/delete signals of all indexed models. This would automatically add and delete them from all backends you have registered in `WAGTAILSEARCH_BACKENDS`. These signal handlers are automatically registered when the `modelsearch` app is loaded.
 
 In some cases, you may not want your content to be automatically reindexed and instead rely on the `update_index` command for indexing. If you need to disable these signal handlers, use one of the following methods:
 
@@ -46,7 +46,7 @@ It is recommended to run this command once a week and at the following times:
 The search may not return any results while this command is running, so avoid running it at peak times.
 
 ```{note}
-The `update_index` command is also aliased as `wagtail_update_index`, for use when another installed package (such as [Haystack](https://haystacksearch.org/)) provides a conflicting `update_index` command. In this case, the other package's entry in `INSTALLED_APPS` should appear above `wagtail.search` so that its `update_index` command takes precedence over Wagtail's.
+The `update_index` command is also aliased as `wagtail_update_index`, for use when another installed package (such as [Haystack](https://haystacksearch.org/)) provides a conflicting `update_index` command. In this case, the other package's entry in `INSTALLED_APPS` should appear above `modelsearch` so that its `update_index` command takes precedence over Wagtail's.
 ```
 
 (wagtailsearch_disable_indexing)=
@@ -66,7 +66,7 @@ Fields must be explicitly added to the `search_fields` property of your `Page`-d
 This creates an `EventPage` model with two fields: `description` and `date`. `description` is indexed as a `SearchField` and `date` is indexed as a `FilterField`.
 
 ```python
-from wagtail.search import index
+from modelsearch import index
 from django.utils import timezone
 
 class EventPage(Page):
@@ -95,11 +95,11 @@ These are used for performing full-text searches on your models, usually for tex
 
     ```{note}
     The PostgresSQL full-text search only supports [four weight levels (A, B, C, D)](https://www.postgresql.org/docs/current/textsearch-features.html).
-    When the database search backend `wagtail.search.backends.database` is used on a PostgreSQL database, it will take all boost values in the project into consideration and group them into the four available weights.
+    When the database search backend `modelsearch.backends.database` is used on a PostgreSQL database, it will take all boost values in the project into consideration and group them into the four available weights.
 
     This means that in this configuration there are effectively only four boost levels used for ranking the search results, even if more boost values have been used.
 
-    You can find out roughly which boost thresholds map to which weight in PostgreSQL by starting a new Django shell with `./manage.py shell` and inspecting `wagtail.search.backends.database.postgres.weights.BOOST_WEIGHTS`.
+    You can find out roughly which boost thresholds map to which weight in PostgreSQL by starting a new Django shell with `./manage.py shell` and inspecting `modelsearch.backends.database.postgres.weights.BOOST_WEIGHTS`.
     You should see something like `[(10.0, 'A'), (7.166666666666666, 'B'), (4.333333333333333, 'C'), (1.5, 'D')]`.
     Boost values above each threshold will be treated with the respective weight.
     ```
@@ -133,7 +133,7 @@ This allows you to index fields from related objects. It works on all types of r
 For example, if we have a book that has a `ForeignKey` to its author, we can nest the author's `name` field inside the book:
 
 ```python
-from wagtail.search import index
+from modelsearch import index
 
 class Book(models.Model, index.Indexed):
     ...
@@ -153,7 +153,7 @@ This will allow you to search for books by their author's name.
 It works the other way around as well. You can index an author's books, allowing an author to be searched for by the titles of books they've published:
 
 ```python
-from wagtail.search import index
+from modelsearch import index
 
 class Author(models.Model, index.Indexed):
     ...
@@ -183,7 +183,7 @@ Search/filter fields do not need to be Django model fields. They can also be any
 One use for this is indexing the `get_*_display` methods Django creates automatically for fields with choices.
 
 ```python
-from wagtail.search import index
+from modelsearch import index
 
 class EventPage(Page):
     IS_PRIVATE_CHOICES = (
@@ -226,7 +226,7 @@ Any Django model can be indexed and searched.
 To do this, inherit from `index.Indexed` and add some `search_fields` to the model.
 
 ```python
-from wagtail.search import index
+from modelsearch import index
 
 class Book(index.Indexed, models.Model):
     title = models.CharField(max_length=255)
@@ -245,7 +245,7 @@ class Book(index.Indexed, models.Model):
     ]
 
 # As this model doesn't have a search method in its QuerySet, we have to call search directly on the backend
->>> from wagtail.search.backends import get_search_backend
+>>> from modelsearch.backends import get_search_backend
 >>> s = get_search_backend()
 
 # Run a search for a book by Roald Dahl

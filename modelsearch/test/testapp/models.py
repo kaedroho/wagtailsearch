@@ -1,7 +1,7 @@
 from django.db import models
 from taggit.managers import TaggableManager
 
-from wagtail.search import index
+from modelsearch import index
 
 
 class Author(index.Indexed, models.Model):

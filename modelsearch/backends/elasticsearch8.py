@@ -1,7 +1,7 @@
 from django.core.exceptions import ImproperlyConfigured
 from elasticsearch import NotFoundError
 
-from wagtail.search.backends.elasticsearch7 import (
+from modelsearch.backends.elasticsearch7 import (
     Elasticsearch7AutocompleteQueryCompiler,
     Elasticsearch7Index,
     Elasticsearch7Mapping,
@@ -9,7 +9,7 @@ from wagtail.search.backends.elasticsearch7 import (
     Elasticsearch7SearchQueryCompiler,
     Elasticsearch7SearchResults,
 )
-from wagtail.search.index import class_is_indexed
+from modelsearch.index import class_is_indexed
 
 
 class Elasticsearch8Mapping(Elasticsearch7Mapping):

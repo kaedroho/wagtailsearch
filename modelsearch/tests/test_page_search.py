@@ -2,8 +2,8 @@ from django.conf import settings
 from django.test import TestCase
 
 from wagtail.models import Page
-from wagtail.search.backends import get_search_backend
-from wagtail.search.backends.base import BaseSearchQueryCompiler, BaseSearchResults
+from modelsearch.backends import get_search_backend
+from modelsearch.backends.base import BaseSearchQueryCompiler, BaseSearchResults
 
 
 class PageSearchTests:

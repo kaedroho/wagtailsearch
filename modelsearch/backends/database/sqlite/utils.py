@@ -23,7 +23,7 @@ def fts5_available():
 
 
 def fts_table_exists():
-    from wagtail.search.models import SQLiteFTSIndexEntry
+    from modelsearch.models import SQLiteFTSIndexEntry
 
     try:
         # ignore result of query; we are only interested in the query failing,

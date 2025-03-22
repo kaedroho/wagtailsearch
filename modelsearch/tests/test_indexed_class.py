@@ -4,8 +4,8 @@ from django.core import checks
 from django.test import TestCase
 
 from wagtail.models import Page
-from wagtail.search import index
-from wagtail.test.search import models
+from modelsearch import index
+from modelsearch.test.testapp import models
 from wagtail.test.testapp.models import (
     TaggedChildPage,
     TaggedGrandchildPage,

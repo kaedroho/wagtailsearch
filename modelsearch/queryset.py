@@ -1,4 +1,4 @@
-from wagtail.search.backends import get_search_backend
+from modelsearch.backends import get_search_backend
 
 
 class SearchableQuerySetMixin:
