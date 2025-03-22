@@ -5,8 +5,6 @@ from django.utils.translation import gettext_lazy as _
 
 from modelsearch.signal_handlers import register_signal_handlers
 
-from . import checks  # NOQA: F401
-
 
 class WagtailSearchAppConfig(AppConfig):
     name = "modelsearch"
