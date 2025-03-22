@@ -1,15 +1,14 @@
 from django.apps import AppConfig
 from django.core.checks import Tags, Warning, register
 from django.db import connection
-from django.utils.translation import gettext_lazy as _
 
 from modelsearch.signal_handlers import register_signal_handlers
 
 
-class WagtailSearchAppConfig(AppConfig):
+class ModelSearchAppConfig(AppConfig):
     name = "modelsearch"
-    label = "wagtailsearch"
-    verbose_name = _("Wagtail search")
+    label = "modelsearch"
+    verbose_name = "Django ModelSearch"
     default_auto_field = "django.db.models.AutoField"
 
     def ready(self):
@@ -37,7 +36,7 @@ class WagtailSearchAppConfig(AppConfig):
                     Warning(
                         "Your SQLite version is older than 3.19.0. A fallback search backend will be used instead.",
                         hint="Upgrade your SQLite version to at least 3.19.0",
-                        id="wagtailsearch.W002",
+                        id="modelsearch.W002",
                         obj=WagtailSearchAppConfig,
                     )
                 ]
@@ -46,7 +45,7 @@ class WagtailSearchAppConfig(AppConfig):
                     Warning(
                         "Your SQLite installation is missing the fts5 extension. A fallback search backend will be used instead.",
                         hint="Upgrade your SQLite installation to a version with fts5 enabled",
-                        id="wagtailsearch.W003",
+                        id="modelsearch.W003",
                         obj=WagtailSearchAppConfig,
                     )
                 ]

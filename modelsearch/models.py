@@ -134,13 +134,13 @@ elif connection.vendor == "sqlite":
             body = TextField(null=True)
             index_entry = OneToOneField(
                 primary_key=True,
-                to="wagtailsearch.indexentry",
+                to="modelsearch.indexentry",
                 on_delete=models.CASCADE,
                 db_column="rowid",
             )
 
             class Meta:
-                db_table = "wagtailsearch_indexentry_fts"
+                db_table = "modelsearch_indexentry_fts"
 
 elif connection.vendor == "mysql":
 

@@ -30,7 +30,7 @@ def SearchBackend(params):
                 warnings.warn(
                     "The installed SQLite library supports full-text search, but the table for storing "
                     "searchable content is missing. This probably means SQLite was upgraded after the "
-                    "migration was applied. To enable full-text search, reapply wagtailsearch migration 0006 "
+                    "migration was applied. To enable full-text search, reapply modelsearch migration 0006 "
                     "or create the table manually."
                 )
             else:

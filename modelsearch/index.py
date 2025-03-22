@@ -116,7 +116,7 @@ class Indexed:
                     checks.Warning(
                         message.format(model=cls.__name__, name=field.field_name),
                         obj=cls,
-                        id="wagtailsearch.W004",
+                        id="modelsearch.W004",
                     )
                 )
         return errors

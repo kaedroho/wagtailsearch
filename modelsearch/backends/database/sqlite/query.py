@@ -23,7 +23,7 @@ class BM25(Func):
         function=None,
         template=None,
     ):
-        sql, params = "bm25(wagtailsearch_indexentry_fts)", []
+        sql, params = "bm25(modelsearch_indexentry_fts)", []
         return sql, params
 
 
@@ -168,7 +168,7 @@ class CombinedSearchQueryExpression(SearchQueryCombinable, CombinedExpression):
 class MatchExpression(Expression):
     filterable = True
     template = (
-        "wagtailsearch_indexentry_fts MATCH %s"  # TODO: Can the table name be inferred?
+        "modelsearch_indexentry_fts MATCH %s"  # TODO: Can the table name be inferred?
     )
     output_field = BooleanField()
 

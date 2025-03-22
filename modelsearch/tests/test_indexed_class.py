@@ -106,7 +106,7 @@ class TestSearchFields(TestCase):
                 checks.Warning(
                     "Book.search_fields contains non-existent field 'foo'",
                     obj=models.Book,
-                    id="wagtailsearch.W004",
+                    id="modelsearch.W004",
                 )
             ]
             errors = models.Book.check()
@@ -117,7 +117,7 @@ class TestSearchFields(TestCase):
 
         # first confirm that errors show as TaggedPage (in test models) has no Page.search_fields
         errors = [
-            error for error in checks.run_checks() if error.id == "wagtailsearch.W001"
+            error for error in checks.run_checks() if error.id == "modelsearch.W001"
         ]
 
         # should only ever get this warning on the sub-classes of the page model
@@ -143,7 +143,7 @@ class TestSearchFields(TestCase):
             errors = [
                 error
                 for error in checks.run_checks()
-                if error.id == "wagtailsearch.W001"
+                if error.id == "modelsearch.W001"
             ]
             self.assertEqual([], errors)
 
@@ -152,6 +152,6 @@ class TestSearchFields(TestCase):
             errors = [
                 error
                 for error in checks.run_checks()
-                if error.id == "wagtailsearch.W001"
+                if error.id == "modelsearch.W001"
             ]
             self.assertEqual([], errors)
