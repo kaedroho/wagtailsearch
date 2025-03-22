@@ -29,7 +29,7 @@ from modelsearch.index import (
     get_indexed_models,
 )
 from modelsearch.query import And, Boost, Fuzzy, MatchAll, Not, Or, Phrase, PlainText
-from wagtail.utils.utils import deep_update
+from modelsearch.utils import deep_update
 
 use_new_elasticsearch_api = ELASTICSEARCH_VERSION >= (7, 15)
 
