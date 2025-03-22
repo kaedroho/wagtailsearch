@@ -1,14 +1,14 @@
-(wagtailsearch_indexing)=
+(modelsearch_indexing)=
 
 # Indexing
 
 To make a model searchable, you'll need to add it to the search index. All pages, images, and documents are indexed for you, so you can start searching them right away.
 
-If you have created some extra fields in a subclass of Page or Image, you may want to add these new fields to the search index too so that a user's search query will match their content. See {ref}`wagtailsearch_indexing_fields` for info on how to do this.
+If you have created some extra fields in a subclass of Page or Image, you may want to add these new fields to the search index too so that a user's search query will match their content. See {ref}`modelsearch_indexing_fields` for info on how to do this.
 
-If you have a custom model that you would like to make searchable, see {ref}`wagtailsearch_indexing_models`.
+If you have a custom model that you would like to make searchable, see {ref}`modelsearch_indexing_models`.
 
-(wagtailsearch_indexing_update)=
+(modelsearch_indexing_update)=
 
 ## Updating the index
 
@@ -16,7 +16,7 @@ If the search index is kept separate from the database (when using Elasticsearch
 
 ### Signal handlers
 
-`wagtailsearch` provides some signal handlers which bind to the save/delete signals of all indexed models. This would automatically add and delete them from all backends you have registered in `MODELSEARCH_BACKENDS`. These signal handlers are automatically registered when the `modelsearch` app is loaded.
+`modelsearch` provides some signal handlers which bind to the save/delete signals of all indexed models. This would automatically add and delete them from all backends you have registered in `MODELSEARCH_BACKENDS`. These signal handlers are automatically registered when the `modelsearch` app is loaded.
 
 In some cases, you may not want your content to be automatically reindexed and instead rely on the `update_index` command for indexing. If you need to disable these signal handlers, use one of the following methods:
 
@@ -49,13 +49,13 @@ The search may not return any results while this command is running, so avoid ru
 The `update_index` command is also aliased as `wagtail_update_index`, for use when another installed package (such as [Haystack](https://haystacksearch.org/)) provides a conflicting `update_index` command. In this case, the other package's entry in `INSTALLED_APPS` should appear above `modelsearch` so that its `update_index` command takes precedence over Wagtail's.
 ```
 
-(wagtailsearch_disable_indexing)=
+(modelsearch_disable_indexing)=
 
 ### Disabling model indexing
 
 Indexing of a model can be disabled completely by setting `search_fields = []` within the model. This will disable index updates by the signal handler and by the `update_index` management command.
 
-(wagtailsearch_indexing_fields)=
+(modelsearch_indexing_fields)=
 
 ## Indexing extra fields
 
@@ -83,7 +83,7 @@ class EventPage(Page):
 >>> EventPage.objects.filter(date__gt=timezone.now()).search("Christmas")
 ```
 
-(wagtailsearch_index_searchfield)=
+(modelsearch_index_searchfield)=
 
 ### `index.SearchField`
 
@@ -106,7 +106,7 @@ These are used for performing full-text searches on your models, usually for tex
 
 -   **es_extra** (`dict`) - This field is to allow the developer to set or override any setting on the field in the Elasticsearch mapping. Use this if you want to make use of any Elasticsearch features that are not yet supported in Wagtail.
 
-(wagtailsearch_index_autocompletefield)=
+(modelsearch_index_autocompletefield)=
 
 ### `index.AutocompleteField`
 
@@ -118,13 +118,13 @@ This takes the same options as `index.SearchField`.
 `index.AutocompleteField` should only be used on fields that are displayed in the search results. This allows users to see any words that were partial-matched.
 ```
 
-(wagtailsearch_index_filterfield)=
+(modelsearch_index_filterfield)=
 
 ### `index.FilterField`
 
 These are added to the search index but are not used for full-text searches. Instead, they allow you to run filters on your search results.
 
-(wagtailsearch_index_relatedfields)=
+(modelsearch_index_relatedfields)=
 
 ### `index.RelatedFields`
 
@@ -174,7 +174,7 @@ It's not possible to filter on any `index.FilterFields` within `index.RelatedFie
 
 Filtering on `index.RelatedFields` with the `QuerySet` API is planned for a future release of Wagtail.
 
-(wagtailsearch_indexing_callable_fields)=
+(modelsearch_indexing_callable_fields)=
 
 ### Indexing callables and other attributes
 
@@ -217,7 +217,7 @@ class BookPage(Page):
     ]
 ```
 
-(wagtailsearch_indexing_models)=
+(modelsearch_indexing_models)=
 
 ## Indexing custom models
 

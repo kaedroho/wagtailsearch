@@ -80,7 +80,7 @@ MODELSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'modelsearch.backends.elasticsearch8',
         'URLS': ['https://localhost:9200'],
-        'INDEX': 'wagtail',
+        'INDEX': 'test',
         'TIMEOUT': 5,
         'OPTIONS': {},
         'INDEX_SETTINGS': {},
@@ -102,7 +102,7 @@ MODELSEARCH_BACKENDS = {
 }
 ```
 
-`INDEX_SETTINGS` is a dictionary used to override the default settings to create the index. The default settings are defined inside the `ElasticsearchSearchBackend` class in the module `wagtail/wagtail/search/backends/elasticsearch7.py`. Any new key is added and any existing key, if not a dictionary, is replaced with the new value. Here's a sample of how to configure the number of shards and set the Italian LanguageAnalyzer as the default analyzer:
+`INDEX_SETTINGS` is a dictionary used to override the default settings to create the index. The default settings are defined inside the `ElasticsearchSearchBackend` class in the module `modelsearch/backends/elasticsearch7.py`. Any new key is added and any existing key, if not a dictionary, is replaced with the new value. Here's a sample of how to configure the number of shards and set the Italian LanguageAnalyzer as the default analyzer:
 
 ```python
 MODELSEARCH_BACKENDS = {
@@ -149,7 +149,7 @@ from requests_aws4auth import AWS4Auth
 MODELSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'modelsearch.backends.elasticsearch7',
-        'INDEX': 'wagtail',
+        'INDEX': 'test',
         'TIMEOUT': 5,
         'HOSTS': [{
             'host': 'YOURCLUSTER.REGION.es.amazonaws.com',
@@ -167,4 +167,4 @@ MODELSEARCH_BACKENDS = {
 
 ## Rolling Your Own
 
-Wagtail search backends implement the interface defined in `wagtail/wagtail/wagtailsearch/backends/base.py`. At a minimum, the backend's `search()` method must return a collection of objects or `model.objects.none()`. For a fully-featured search backend, examine the Elasticsearch backend code in `elasticsearch.py`.
+Wagtail search backends implement the interface defined in `modelsearch/backends/base.py`. At a minimum, the backend's `search()` method must return a collection of objects or `model.objects.none()`. For a fully-featured search backend, examine the Elasticsearch backend code in `elasticsearch.py`.

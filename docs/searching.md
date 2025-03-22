@@ -1,8 +1,8 @@
-(wagtailsearch_searching)=
+(modelsearch_searching)=
 
 # Searching
 
-(wagtailsearch_searching_pages)=
+(modelsearch_searching_pages)=
 
 ## Searching QuerySets
 
@@ -14,7 +14,7 @@ Wagtail provides a shortcut for searching pages: the `.search()` `QuerySet` meth
 
 ```python
 # Search future EventPages
->>> from wagtail.models import EventPage
+>>> from myapp.models import EventPage
 >>> EventPage.objects.filter(date__gt=timezone.now()).search("Hello world!")
 ```
 
@@ -41,20 +41,20 @@ Wagtail provides a separate method which performs partial matching on specific a
 [<EventPage: Event 1>, <EventPage: Event 2>]
 ```
 
-(wagtailsearch_images_documents_custom_models)=
+(modelsearch_images_documents_custom_models)=
 
 ### Searching Images, Documents and custom models
 
 Wagtail's document and image models provide a `search` method on their QuerySets, just as pages do:
 
 ```python
->>> from wagtail.images.models import Image
+>>> from myapp.images.models import Image
 
 >>> Image.objects.filter(uploaded_by_user=user).search("Hello")
 [<Image: Hello>, <Image: Hello world!>]
 ```
 
-[Custom models](wagtailsearch_indexing_models) can be searched by using the `search` method on the search backend directly:
+[Custom models](modelsearch_indexing_models) can be searched by using the `search` method on the search backend directly:
 
 ```python
 >>> from myapp.models import Book
@@ -78,7 +78,7 @@ You can also pass a QuerySet into the `search` method, which allows you to add f
 [<Book: Great Expectations>]
 ```
 
-(wagtailsearch_specifying_fields)=
+(modelsearch_specifying_fields)=
 
 ### Specifying the fields to search
 
@@ -92,7 +92,7 @@ This can be limited to a certain set of fields by using the `fields` keyword arg
 [<EventPage: Event 1>, <EventPage: Event 2>]
 ```
 
-(wagtailsearch_faceted_search)=
+(modelsearch_faceted_search)=
 
 ### Faceted search
 
@@ -181,7 +181,7 @@ For example:
 [<Page: World Hello day>]
 ```
 
-If you are looking to implement phrase queries using the double-quote syntax, see [](wagtailsearch_query_string_parsing).
+If you are looking to implement phrase queries using the double-quote syntax, see [](modelsearch_query_string_parsing).
 
 (fuzzy_matching)=
 
@@ -209,7 +209,7 @@ The `operator` keyword argument is also supported on `Fuzzy` objects, defaulting
 [<Page: Hello World>]
 ```
 
-(wagtailsearch_complex_queries)=
+(modelsearch_complex_queries)=
 
 ### Complex search queries
 
@@ -259,7 +259,7 @@ For example:
 
 Note that this isn't supported by the PostgreSQL or database search backends.
 
-(wagtailsearch_query_string_parsing)=
+(modelsearch_query_string_parsing)=
 
 ### Query string parsing
 
@@ -341,7 +341,7 @@ For example:
 [<EventPage: Easter>, <EventPage: Halloween>, <EventPage: Christmas>]
 ```
 
-(wagtailsearch_annotating_results_with_score)=
+(modelsearch_annotating_results_with_score)=
 
 ### Annotating results with score
 
@@ -369,7 +369,7 @@ For example:
 Note that the score itself is arbitrary and it is only useful for comparison
 of results for the same query.
 
-(wagtailsearch_frontend_views)=
+(modelsearch_frontend_views)=
 
 ## An example page search view
 
