@@ -33,4 +33,4 @@ See [](wagtailsearch_searching).
 
 Wagtail provides two backends for storing the search index and performing search queries: one using the database's full-text search capabilities, and another using Elasticsearch. It's also possible to roll your own search backend.
 
-See [](wagtailsearch_backends).
+See [](modelsearch_backends).

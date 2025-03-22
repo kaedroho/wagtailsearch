@@ -1,20 +1,20 @@
-(wagtailsearch_backends)=
+(modelsearch_backends)=
 
 # Backends
 
 Wagtailsearch has support for multiple backends, giving you the choice between using the database for search or an external service such as Elasticsearch.
 
-You can configure which backend to use with the `WAGTAILSEARCH_BACKENDS` setting:
+You can configure which backend to use with the `MODELSEARCH_BACKENDS` setting:
 
 ```python
-WAGTAILSEARCH_BACKENDS = {
+MODELSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'modelsearch.backends.database',
     }
 }
 ```
 
-(wagtailsearch_backends_auto_update)=
+(modelsearch_backends_auto_update)=
 
 ## `AUTO_UPDATE`
 
@@ -23,7 +23,7 @@ By default, Wagtail will automatically keep all indexes up to date. This could i
 The `AUTO_UPDATE` setting allows you to disable this on a per-index basis:
 
 ```python
-WAGTAILSEARCH_BACKENDS = {
+MODELSEARCH_BACKENDS = {
     'default': {
         'BACKEND': ...,
         'AUTO_UPDATE': False,
@@ -33,7 +33,7 @@ WAGTAILSEARCH_BACKENDS = {
 
 If you have disabled auto-update, you must run the [](update_index) command on a regular basis to keep the index in sync with the database.
 
-(wagtailsearch_backends_atomic_rebuild)=
+(modelsearch_backends_atomic_rebuild)=
 
 ## `ATOMIC_REBUILD`
 
@@ -45,7 +45,7 @@ Setting the `ATOMIC_REBUILD` setting to `True` makes Wagtail rebuild into a sepa
 
 Here's a list of backends that Wagtail supports out of the box.
 
-(wagtailsearch_backends_database)=
+(modelsearch_backends_database)=
 
 ### Database Backend (default)
 
@@ -54,7 +54,7 @@ Here's a list of backends that Wagtail supports out of the box.
 The database search backend searches content in the database using the full-text search features of the database backend in use (such as PostgreSQL FTS, SQLite FTS5).
 This backend is intended to be used for development and also should be good enough to use in production on sites that don't require any Elasticsearch specific features.
 
-(wagtailsearch_backends_elasticsearch)=
+(modelsearch_backends_elasticsearch)=
 
 ### Elasticsearch Backend
 
@@ -76,7 +76,7 @@ pip install "elasticsearch>=8.0.0,<9.0.0"  # for Elasticsearch 8.x
 The backend is configured in settings:
 
 ```python
-WAGTAILSEARCH_BACKENDS = {
+MODELSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'modelsearch.backends.elasticsearch8',
         'URLS': ['https://localhost:9200'],
@@ -93,7 +93,7 @@ Other than `BACKEND`, the keys are optional and default to the values shown. Any
 A username and password may be optionally supplied to the `URL` field to provide authentication credentials for the Elasticsearch service:
 
 ```python
-WAGTAILSEARCH_BACKENDS = {
+MODELSEARCH_BACKENDS = {
     'default': {
         ...
         'URLS': ['https://username:password@localhost:9200'],
@@ -105,7 +105,7 @@ WAGTAILSEARCH_BACKENDS = {
 `INDEX_SETTINGS` is a dictionary used to override the default settings to create the index. The default settings are defined inside the `ElasticsearchSearchBackend` class in the module `wagtail/wagtail/search/backends/elasticsearch7.py`. Any new key is added and any existing key, if not a dictionary, is replaced with the new value. Here's a sample of how to configure the number of shards and set the Italian LanguageAnalyzer as the default analyzer:
 
 ```python
-WAGTAILSEARCH_BACKENDS = {
+MODELSEARCH_BACKENDS = {
     'default': {
         ...,
         'INDEX_SETTINGS': {
@@ -129,7 +129,7 @@ If you prefer not to run an Elasticsearch server in development or production, t
 
 -   Sign up for an account at `Bonsai`
 -   Use your Bonsai dashboard to create a Cluster.
--   Configure `URLS` in the Elasticsearch entry in `WAGTAILSEARCH_BACKENDS` using the Cluster URL from your Bonsai dashboard
+-   Configure `URLS` in the Elasticsearch entry in `MODELSEARCH_BACKENDS` using the Cluster URL from your Bonsai dashboard
 -   Run `./manage.py update_index`
 
 (opensearch)=
@@ -146,7 +146,7 @@ The Elasticsearch backend is compatible with [Amazon OpenSearch Service](https:/
 from elasticsearch import RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 
-WAGTAILSEARCH_BACKENDS = {
+MODELSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'modelsearch.backends.elasticsearch7',
         'INDEX': 'wagtail',

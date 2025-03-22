@@ -14,7 +14,7 @@ class InvalidSearchBackendError(ImproperlyConfigured):
 
 
 def get_search_backend_config():
-    search_backends = getattr(settings, "WAGTAILSEARCH_BACKENDS", {})
+    search_backends = getattr(settings, "MODELSEARCH_BACKENDS", {})
 
     # Make sure the default backend is always defined
     search_backends.setdefault(
@@ -55,7 +55,7 @@ def get_search_backend(backend="default", **kwargs):
 
     # Try to find the backend
     try:
-        # Try to get the WAGTAILSEARCH_BACKENDS entry for the given backend name first
+        # Try to get the MODELSEARCH_BACKENDS entry for the given backend name first
         conf = search_backends[backend]
     except KeyError:
         try:

@@ -16,7 +16,7 @@ If the search index is kept separate from the database (when using Elasticsearch
 
 ### Signal handlers
 
-`wagtailsearch` provides some signal handlers which bind to the save/delete signals of all indexed models. This would automatically add and delete them from all backends you have registered in `WAGTAILSEARCH_BACKENDS`. These signal handlers are automatically registered when the `modelsearch` app is loaded.
+`wagtailsearch` provides some signal handlers which bind to the save/delete signals of all indexed models. This would automatically add and delete them from all backends you have registered in `MODELSEARCH_BACKENDS`. These signal handlers are automatically registered when the `modelsearch` app is loaded.
 
 In some cases, you may not want your content to be automatically reindexed and instead rely on the `update_index` command for indexing. If you need to disable these signal handlers, use one of the following methods:
 
@@ -30,7 +30,7 @@ You can disable the signal handlers for a whole search backend by setting the `A
 
 If all search backends have `AUTO_UPDATE` set to `False`, the signal handlers will be completely disabled for the whole site.
 
-For documentation on the `AUTO_UPDATE` setting, see {ref}`wagtailsearch_backends_auto_update`.
+For documentation on the `AUTO_UPDATE` setting, see {ref}`modelsearch_backends_auto_update`.
 
 ### The `update_index` command
 
