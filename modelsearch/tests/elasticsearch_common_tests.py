@@ -167,9 +167,9 @@ class ElasticsearchCommonSearchBackendTests(BackendTests):
             ["JavaScript: The Definitive Guide", "JavaScript: The good parts"],
         )
 
-    def test_update_index_command_schema_only(self):
+    def test_rebuild_modelsearch_index_command_schema_only(self):
         management.call_command(
-            "update_index",
+            "rebuild_modelsearch_index",
             backend_name=self.backend_name,
             schema_only=True,
             stdout=StringIO(),

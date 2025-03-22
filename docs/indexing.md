@@ -12,13 +12,13 @@ If you have a custom model that you would like to make searchable, see {ref}`mod
 
 ## Updating the index
 
-If the search index is kept separate from the database (when using Elasticsearch for example), you need to keep them both in sync. There are two ways to do this: using the search signal handlers, or calling the `update_index` command periodically. For the best speed and reliability, it's best to use both if possible.
+If the search index is kept separate from the database (when using Elasticsearch for example), you need to keep them both in sync. There are two ways to do this: using the search signal handlers, or calling the `rebuild_modelsearch_index` command periodically. For the best speed and reliability, it's best to use both if possible.
 
 ### Signal handlers
 
 `modelsearch` provides some signal handlers which bind to the save/delete signals of all indexed models. This would automatically add and delete them from all backends you have registered in `MODELSEARCH_BACKENDS`. These signal handlers are automatically registered when the `modelsearch` app is loaded.
 
-In some cases, you may not want your content to be automatically reindexed and instead rely on the `update_index` command for indexing. If you need to disable these signal handlers, use one of the following methods:
+In some cases, you may not want your content to be automatically reindexed and instead rely on the `rebuild_modelsearch_index` command for indexing. If you need to disable these signal handlers, use one of the following methods:
 
 #### Disabling auto-update signal handlers for a model
 
@@ -32,11 +32,11 @@ If all search backends have `AUTO_UPDATE` set to `False`, the signal handlers wi
 
 For documentation on the `AUTO_UPDATE` setting, see {ref}`modelsearch_backends_auto_update`.
 
-### The `update_index` command
+### The `rebuild_modelsearch_index` command
 
 Wagtail also provides a command for rebuilding the index from scratch.
 
-`./manage.py update_index`
+`./manage.py rebuild_modelsearch_index`
 
 It is recommended to run this command once a week and at the following times:
 
@@ -45,15 +45,11 @@ It is recommended to run this command once a week and at the following times:
 
 The search may not return any results while this command is running, so avoid running it at peak times.
 
-```{note}
-The `update_index` command is also aliased as `wagtail_update_index`, for use when another installed package (such as [Haystack](https://haystacksearch.org/)) provides a conflicting `update_index` command. In this case, the other package's entry in `INSTALLED_APPS` should appear above `modelsearch` so that its `update_index` command takes precedence over Wagtail's.
-```
-
 (modelsearch_disable_indexing)=
 
 ### Disabling model indexing
 
-Indexing of a model can be disabled completely by setting `search_fields = []` within the model. This will disable index updates by the signal handler and by the `update_index` management command.
+Indexing of a model can be disabled completely by setting `search_fields = []` within the model. This will disable index updates by the signal handler and by the `rebuild_modelsearch_index` management command.
 
 (modelsearch_indexing_fields)=
 

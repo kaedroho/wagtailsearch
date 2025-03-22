@@ -31,13 +31,13 @@ MODELSEARCH_BACKENDS = {
 }
 ```
 
-If you have disabled auto-update, you must run the [](update_index) command on a regular basis to keep the index in sync with the database.
+If you have disabled auto-update, you must run the [](rebuild_modelsearch_index) command on a regular basis to keep the index in sync with the database.
 
 (modelsearch_backends_atomic_rebuild)=
 
 ## `ATOMIC_REBUILD`
 
-By default (when using the Elasticsearch backend), when the `update_index` command is run, Wagtail deletes the index and rebuilds it from scratch. This causes the search engine to not return results until the rebuild is complete and is also risky as you can't roll back if an error occurs.
+By default (when using the Elasticsearch backend), when the `rebuild_modelsearch_index` command is run, Wagtail deletes the index and rebuilds it from scratch. This causes the search engine to not return results until the rebuild is complete and is also risky as you can't roll back if an error occurs.
 
 Setting the `ATOMIC_REBUILD` setting to `True` makes Wagtail rebuild into a separate index while keeping the old index active until the new one is fully built. When the rebuild is finished, the indexes are swapped atomically and the old index is deleted.
 
@@ -130,7 +130,7 @@ If you prefer not to run an Elasticsearch server in development or production, t
 -   Sign up for an account at `Bonsai`
 -   Use your Bonsai dashboard to create a Cluster.
 -   Configure `URLS` in the Elasticsearch entry in `MODELSEARCH_BACKENDS` using the Cluster URL from your Bonsai dashboard
--   Run `./manage.py update_index`
+-   Run `./manage.py rebuild_modelsearch_index`
 
 (opensearch)=
 

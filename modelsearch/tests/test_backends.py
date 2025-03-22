@@ -57,7 +57,7 @@ class BackendTests(WagtailTestUtils):
         IndexEntry.objects.all().delete()
 
         management.call_command(
-            "update_index",
+            "rebuild_modelsearch_index",
             backend_name=self.backend_name,
             stdout=StringIO(),
             chunk_size=50,
@@ -987,10 +987,10 @@ class BackendTests(WagtailTestUtils):
         )
         self.assertSetEqual({r.title for r in results}, {"Programming Rust"})
 
-    def test_update_index_no_verbosity(self):
+    def test_rebuild_modelsearch_index_no_verbosity(self):
         stdout = StringIO()
         management.call_command(
-            "update_index", verbosity=0, backend_name=self.backend_name, stdout=stdout
+            "rebuild_modelsearch_index", verbosity=0, backend_name=self.backend_name, stdout=stdout
         )
         self.assertFalse(stdout.getvalue())
 
