@@ -27,12 +27,6 @@ def SearchBackend(params):
                 USE_SQLITE_FTS = False
             elif not fts_table_exists():
                 USE_SQLITE_FTS = False
-                warnings.warn(
-                    "The installed SQLite library supports full-text search, but the table for storing "
-                    "searchable content is missing. This probably means SQLite was upgraded after the "
-                    "migration was applied. To enable full-text search, reapply modelsearch migration 0006 "
-                    "or create the table manually."
-                )
             else:
                 USE_SQLITE_FTS = True
 
