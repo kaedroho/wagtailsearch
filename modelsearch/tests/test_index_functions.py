@@ -3,11 +3,9 @@ from unittest import mock
 
 from django.test import TestCase, override_settings
 
-from wagtail.models import Page
 from modelsearch import index
 from modelsearch.test.testapp import models
-from wagtail.test.testapp.models import AdvertWithCustomUUIDPrimaryKey, SimplePage
-from wagtail.test.utils import WagtailTestUtils
+from modelsearch.test.utils import ModelSearchTestCase
 
 
 class TestGetIndexedInstance(TestCase):
@@ -47,7 +45,7 @@ class TestGetIndexedInstance(TestCase):
         "default": {"BACKEND": "modelsearch.tests.DummySearchBackend"}
     }
 )
-class TestInsertOrUpdateObject(WagtailTestUtils, TestCase):
+class TestInsertOrUpdateObject(ModelSearchTestCase):
     def test_inserts_object(self, backend):
         obj = models.Book.objects.create(
             title="Test", publication_date=date(2017, 10, 18), number_of_pages=100
@@ -68,21 +66,22 @@ class TestInsertOrUpdateObject(WagtailTestUtils, TestCase):
 
         self.assertFalse(backend().add.mock_calls)
 
-    def test_converts_to_specific_page(self, backend):
-        root_page = Page.objects.get(id=1)
-        page = root_page.add_child(
-            instance=SimplePage(title="test", slug="test", content="test")
-        )
+    # TODO: Replace with non-Wagtail model
+    # def test_converts_to_specific_page(self, backend):
+    #     root_page = Page.objects.get(id=1)
+    #     page = root_page.add_child(
+    #         instance=SimplePage(title="test", slug="test", content="test")
+    #     )
 
-        # Convert page into a generic "Page" object and add it into the index
-        unspecific_page = page.page_ptr
+    #     # Convert page into a generic "Page" object and add it into the index
+    #     unspecific_page = page.page_ptr
 
-        backend().reset_mock()
+    #     backend().reset_mock()
 
-        index.insert_or_update_object(unspecific_page)
+    #     index.insert_or_update_object(unspecific_page)
 
-        # It should be automatically converted back to the specific version
-        backend().add.assert_called_with(page)
+    #     # It should be automatically converted back to the specific version
+    #     backend().add.assert_called_with(page)
 
     def test_catches_index_error(self, backend):
         obj = models.Book.objects.create(
@@ -110,7 +109,7 @@ class TestInsertOrUpdateObject(WagtailTestUtils, TestCase):
         "default": {"BACKEND": "modelsearch.tests.DummySearchBackend"}
     }
 )
-class TestRemoveObject(WagtailTestUtils, TestCase):
+class TestRemoveObject(ModelSearchTestCase):
     def test_removes_object(self, backend):
         obj = models.Book.objects.create(
             title="Test", publication_date=date(2017, 10, 18), number_of_pages=100
@@ -157,7 +156,7 @@ class TestRemoveObject(WagtailTestUtils, TestCase):
         "default": {"BACKEND": "modelsearch.tests.DummySearchBackend"}
     }
 )
-class TestSignalHandlers(WagtailTestUtils, TestCase):
+class TestSignalHandlers(ModelSearchTestCase):
     def test_index_on_create(self, backend):
         backend().reset_mock()
         with self.captureOnCommitCallbacks(execute=True):
@@ -166,11 +165,12 @@ class TestSignalHandlers(WagtailTestUtils, TestCase):
             )
         backend().add.assert_called_with(obj)
 
-    def test_index_on_create_with_uuid_primary_key(self, backend):
-        backend().reset_mock()
-        with self.captureOnCommitCallbacks(execute=True):
-            obj = AdvertWithCustomUUIDPrimaryKey.objects.create(text="Test")
-        backend().add.assert_called_with(obj)
+    # TODO: Replace with non-Wagtail model
+    # def test_index_on_create_with_uuid_primary_key(self, backend):
+    #     backend().reset_mock()
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj = AdvertWithCustomUUIDPrimaryKey.objects.create(text="Test")
+    #     backend().add.assert_called_with(obj)
 
     def test_index_on_update(self, backend):
         obj = models.Book.objects.create(
@@ -186,17 +186,18 @@ class TestSignalHandlers(WagtailTestUtils, TestCase):
         indexed_object = backend().add.call_args[0][0]
         self.assertEqual(indexed_object.title, "Updated test")
 
-    def test_index_on_update_with_uuid_primary_key(self, backend):
-        obj = AdvertWithCustomUUIDPrimaryKey.objects.create(text="Test")
+    # TODO: Replace with non-Wagtail model
+    # def test_index_on_update_with_uuid_primary_key(self, backend):
+    #     obj = AdvertWithCustomUUIDPrimaryKey.objects.create(text="Test")
 
-        backend().reset_mock()
-        obj.text = "Updated test"
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.save()
+    #     backend().reset_mock()
+    #     obj.text = "Updated test"
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.save()
 
-        self.assertEqual(backend().add.call_count, 1)
-        indexed_object = backend().add.call_args[0][0]
-        self.assertEqual(indexed_object.text, "Updated test")
+    #     self.assertEqual(backend().add.call_count, 1)
+    #     indexed_object = backend().add.call_args[0][0]
+    #     self.assertEqual(indexed_object.text, "Updated test")
 
     def test_index_on_delete(self, backend):
         obj = models.Book.objects.create(
@@ -208,13 +209,14 @@ class TestSignalHandlers(WagtailTestUtils, TestCase):
             obj.delete()
         backend().delete.assert_called_with(obj)
 
-    def test_index_on_delete_with_uuid_primary_key(self, backend):
-        obj = AdvertWithCustomUUIDPrimaryKey.objects.create(text="Test")
+    # TODO: Replace with non-Wagtail model
+    # def test_index_on_delete_with_uuid_primary_key(self, backend):
+    #     obj = AdvertWithCustomUUIDPrimaryKey.objects.create(text="Test")
 
-        backend().reset_mock()
-        with self.captureOnCommitCallbacks(execute=True):
-            obj.delete()
-        backend().delete.assert_called_with(obj)
+    #     backend().reset_mock()
+    #     with self.captureOnCommitCallbacks(execute=True):
+    #         obj.delete()
+    #     backend().delete.assert_called_with(obj)
 
     def test_do_not_index_fields_omitted_from_update_fields(self, backend):
         obj = models.Book.objects.create(
@@ -239,7 +241,7 @@ class TestSignalHandlers(WagtailTestUtils, TestCase):
         "default": {"BACKEND": "modelsearch.tests.DummySearchBackend"}
     }
 )
-class TestSignalHandlersSearchDisabled(TestCase, WagtailTestUtils):
+class TestSignalHandlersSearchDisabled(ModelSearchTestCase):
     def test_index_on_create_and_update(self, backend):
         obj = models.UnindexedBook.objects.create(
             title="Test", publication_date=date(2017, 10, 18), number_of_pages=100

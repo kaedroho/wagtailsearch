@@ -32,11 +32,12 @@ from modelsearch.query import (
     PlainText,
 )
 from modelsearch.test.testapp import models
-from wagtail.test.utils import WagtailTestUtils
+from modelsearch.test.utils import ModelSearchTestCase
 
 
-class BackendTests(WagtailTestUtils):
+class BackendTests(ModelSearchTestCase):
     # To test a specific backend, subclass BackendTests and define self.backend_path.
+    backend_path = None
 
     fixtures = ["search"]
 
