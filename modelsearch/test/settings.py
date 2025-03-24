@@ -98,7 +98,8 @@ MODELSEARCH_BACKENDS = {
 }
 
 if SEARCH_BACKEND in ["elasticsearch7", "elasticsearch8"]:
-    MODELSEARCH_BACKENDS["default"]["URLS"] = ["http://localhost:9200"]
+    ELASTICSEARCH_URL = os.getenv("ELASTICSEARCH_URL", "http://localhost:9200")
+    MODELSEARCH_BACKENDS["default"]["URLS"] = [ELASTICSEARCH_URL]
     MODELSEARCH_BACKENDS["default"]["INDEX"] = "modelsearchtest"
 
 

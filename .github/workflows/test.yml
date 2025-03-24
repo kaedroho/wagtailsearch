@@ -1,0 +1,159 @@
+name: Test Modelsearch
+
+on:
+  push:
+    branches:
+      - main
+      - "stable/**"
+
+  pull_request:
+
+env:
+  PYTHON_VERSION: "3.13"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - database: sqlite
+            backend: db
+          - database: postgresql
+            backend: db
+          - database: mysql
+            backend: db
+          - database: mariadb
+            backend: db
+          - database: sqlite
+            backend: elasticsearch7
+          - database: sqlite
+            backend: elasticsearch8
+
+    services:
+      postgresql:
+        image: postgres:17
+        env:
+          POSTGRES_USER: user
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: testdb
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U user -d testdb"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: testdb
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd "mysqladmin ping -h localhost -uroot -proot"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      mariadb:
+        image: mariadb:11
+        env:
+          MARIADB_ROOT_PASSWORD: root
+          MARIADB_DATABASE: testdb
+        ports:
+          - 3307:3306
+        options: >-
+          --health-cmd "healthcheck.sh --connect --innodb_initialized"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+      elasticsearch7:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.13
+        env:
+          discovery.type: single-node
+          ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+        ports:
+          - 9207:9200
+        options: >-
+          --health-cmd "curl -s http://localhost:9200/_cluster/health | grep 'status' || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+      elasticsearch8:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.11.2
+        env:
+          discovery.type: single-node
+          xpack.security.enabled: false
+          ES_JAVA_OPTS: "-Xms512m -Xmx512m"
+        ports:
+          - 9208:9200
+        options: >-
+          --health-cmd "curl -s http://localhost:9200/_cluster/health | grep 'status' || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Wait for Elasticsearch
+        if: contains(matrix.backend, 'elasticsearch')
+        run: |
+          ES_PORT=9200
+          if [[ "${{ matrix.backend }}" == "elasticsearch7" ]]; then
+            ES_PORT=9207
+          elif [[ "${{ matrix.backend }}" == "elasticsearch8" ]]; then
+            ES_PORT=9208
+          fi
+
+          echo "Waiting for Elasticsearch on port $ES_PORT..."
+          for i in {1..24}; do
+            if curl -s "http://localhost:$ES_PORT/_cluster/health" | grep -q '"status"'; then
+              echo "Elasticsearch is ready!"
+              exit 0
+            fi
+            echo "Still waiting for Elasticsearch ($i/24)..."
+            sleep 5
+          done
+
+          echo "Elasticsearch did not start in time!"
+          exit 1
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+          if [[ "${{ matrix.backend }}" == "elasticsearch7" ]]; then
+            pip install "elasticsearch>7,<8"
+          elif [[ "${{ matrix.backend }}" == "elasticsearch8" ]]; then
+            pip install "elasticsearch>8,<9"
+          fi
+
+      - name: Run tests
+        run: |
+          if [[ "${{ matrix.database }}" == "postgresql" ]]; then
+              export DATABASE_URL="postgresql://user:password@localhost:5432/testdb"
+          elif [[ "${{ matrix.database }}" == "mysql" ]]; then
+              export DATABASE_URL="mysql://root:root@127.0.0.1:3306/testdb"
+          elif [[ "${{ matrix.database }}" == "mariadb" ]]; then
+              export DATABASE_URL="mysql://root:root@127.0.0.1:3307/testdb"
+          fi
+
+          if [[ "${{ matrix.backend }}" == "elasticsearch7" ]]; then
+            export ELASTICSEARCH_URL="http://localhost:9207"
+          elif [[ "${{ matrix.backend }}" == "elasticsearch8" ]]; then
+            export ELASTICSEARCH_URL="http://localhost:9208"
+          fi
+
+          python runtests.py --backend ${{ matrix.backend }}
