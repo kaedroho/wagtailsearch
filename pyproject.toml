@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=61.0.0,<69.3.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "modelsearch"
+dynamic = ["version"]
+authors = [
+  {name = "Karl Hobley", email = "karl@kaed.uk"},
+]
+requires-python = ">= 3.11"
+dependencies = [
+  "Django>=5.0",
+  "django-modelcluster>=6.4",
+  "django-taggit>=6.1",
+]
+description = "A library for indexing and searching Django models with Elasicsearch or database."
+readme = "README.md"
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+
+[project.urls]
+Source = "https://github.com/kaedroho/django-modelsearch"
+
+[tool.setuptools.dynamic]
+version = {attr = "modelsearch.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["modelsearch*"]
