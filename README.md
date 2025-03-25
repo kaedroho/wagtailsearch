@@ -1,6 +1,6 @@
 # Django ModelSearch
 
-<p align="center">
+<p>
     <br>
     <a href="https://github.com/kaedroho/django-modelsearch/actions">
         <img src="https://github.com/kaedroho/django-modelsearch/workflows/ModelSearch%20CI/badge.svg" alt="Build Status" />
