@@ -1,5 +1,21 @@
 # Django ModelSearch
 
+<p align="center">
+    <br>
+    <a href="https://github.com/kaedroho/django-modelsearch/actions">
+        <img src="https://github.com/kaedroho/django-modelsearch/workflows/ModelSearch%20CI/badge.svg" alt="Build Status" />
+    </a>
+    <a href="https://opensource.org/licenses/BSD-3-Clause">
+        <img src="https://img.shields.io/badge/license-BSD-blue.svg" alt="License" />
+    </a>
+    <a href="https://pypi.python.org/pypi/modelsearch/">
+        <img src="https://img.shields.io/pypi/v/modelsearch.svg" alt="Version" />
+    </a>
+    <!-- <a href="https://pypi.python.org/pypi/modelsearch/">
+        <img src="https://img.shields.io/badge/Documentation-blue" alt="Documentation" />
+    </a> -->
+</p>
+
 Django ModelSearch allows you index Django models and search using the ORM. It supports PostgreSQL FTS, SQLite FTS5, MySQL FTS, MariaDB FTS, and Elasticsearch.
 
 Features:
