@@ -10,7 +10,7 @@ authors = [
 ]
 requires-python = ">= 3.11"
 dependencies = [
-  "Django>=5.0",
+  "Django (>5.1,<6)",
 ]
 description = "A library for indexing and searching Django models with Elasicsearch or database."
 readme = "README.md"
@@ -31,11 +31,13 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-django-modelcluster = [
-  "django-modelcluster>=6.4",
-]
-django-taggit = [
-  "django-taggit>=6.1",
+test = [
+  "dj-database-url (>=2.3.0,<3)",
+  "psycopg (>=3.2.6,<4)",
+  "mysqlclient (>=2.2.0,<3)",
+  "django-modelcluster (>=6.4,<7)",
+  "django-tasks (>=0.6.1,<1)",
+  "django-taggit (>=6.1.0,<7)",
 ]
 
 [project.urls]
