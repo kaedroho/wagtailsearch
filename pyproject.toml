@@ -11,8 +11,6 @@ authors = [
 requires-python = ">= 3.11"
 dependencies = [
   "Django>=5.0",
-  "django-modelcluster>=6.4",
-  "django-taggit>=6.1",
 ]
 description = "A library for indexing and searching Django models with Elasicsearch or database."
 readme = "README.md"
@@ -32,6 +30,13 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
+[project.optional-dependencies]
+django-modelcluster = [
+  "django-modelcluster>=6.4",
+]
+django-taggit = [
+  "django-taggit>=6.1",
+]
 
 [project.urls]
 Source = "https://github.com/kaedroho/django-modelsearch"

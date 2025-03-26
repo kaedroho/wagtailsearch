@@ -132,7 +132,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install .[django-modelcluster,django-taggit]
 
           if [[ "${{ matrix.backend }}" == "elasticsearch7" ]]; then
             pip install "elasticsearch>7,<8"

@@ -6,7 +6,6 @@ from django.core import checks
 from django.core.exceptions import FieldDoesNotExist
 from django.db import models
 from django.db.models.fields.related import ForeignObjectRel, OneToOneRel, RelatedField
-from modelcluster.fields import ParentalManyToManyField
 
 from modelsearch.backends import get_search_backends_with_name
 
@@ -259,34 +258,39 @@ class BaseField:
             return "CharField"
 
     def get_value(self, obj):
-        from taggit.managers import TaggableManager
-
         try:
             field = self.get_field(obj.__class__)
-            value = field.value_from_object(obj)
-            if hasattr(field, "get_searchable_content"):
-                value = field.get_searchable_content(value)
-            elif isinstance(field, TaggableManager):
-                # As of django-taggit 1.0, value_from_object returns a list of Tag objects,
-                # which matches what we want
-                pass
-            elif isinstance(field, RelatedField):
-                # The type of the ForeignKey may have a get_searchable_content method that we should
-                # call. Firstly we need to find the field its referencing but it may be referencing
-                # another RelatedField (eg an FK to page_ptr_id) so we need to run this in a while
-                # loop to find the actual remote field.
-                remote_field = field
-                while isinstance(remote_field, RelatedField):
-                    remote_field = remote_field.target_field
-
-                if hasattr(remote_field, "get_searchable_content"):
-                    value = remote_field.get_searchable_content(value)
-            return value
         except FieldDoesNotExist:
             value = getattr(obj, self.field_name, None)
             if hasattr(value, "__call__"):
                 value = value()
             return value
+
+        value = field.value_from_object(obj)
+
+        if apps.is_installed("taggit"):
+            from taggit.managers import TaggableManager
+            if isinstance(field, TaggableManager):
+                # As of django-taggit 1.0, value_from_object returns a list of Tag objects,
+                # which matches what we want
+                return value
+
+        if hasattr(field, "get_searchable_content"):
+            value = field.get_searchable_content(value)
+
+        elif isinstance(field, RelatedField):
+            # The type of the ForeignKey may have a get_searchable_content method that we should
+            # call. Firstly we need to find the field its referencing but it may be referencing
+            # another RelatedField (eg an FK to page_ptr_id) so we need to run this in a while
+            # loop to find the actual remote field.
+            remote_field = field
+            while isinstance(remote_field, RelatedField):
+                remote_field = remote_field.target_field
+
+            if hasattr(remote_field, "get_searchable_content"):
+                value = remote_field.get_searchable_content(value)
+
+        return value
 
     def __repr__(self):
         return f"<{self.__class__.__name__}: {self.field_name}>"
@@ -338,21 +342,24 @@ class RelatedFields:
         except FieldDoesNotExist:
             return queryset
 
-        if isinstance(field, RelatedField) and not isinstance(
-            field, ParentalManyToManyField
-        ):
-            if field.many_to_one or field.one_to_one:
-                queryset = queryset.select_related(self.field_name)
-            elif field.one_to_many or field.many_to_many:
-                queryset = queryset.prefetch_related(self.field_name)
+        if apps.is_installed("modelcluster"):
+            from modelcluster.fields import ParentalManyToManyField
 
-        elif isinstance(field, ForeignObjectRel):
+            if isinstance(field, RelatedField) and not isinstance(
+                field, ParentalManyToManyField
+            ):
+                if field.many_to_one or field.one_to_one:
+                    return queryset.select_related(self.field_name)
+                elif field.one_to_many or field.many_to_many:
+                    return queryset.prefetch_related(self.field_name)
+
+        if isinstance(field, ForeignObjectRel):
             # Reverse relation
             if isinstance(field, OneToOneRel):
                 # select_related for reverse OneToOneField
-                queryset = queryset.select_related(self.field_name)
+                return queryset.select_related(self.field_name)
             else:
                 # prefetch_related for anything else (reverse ForeignKey/ManyToManyField)
-                queryset = queryset.prefetch_related(self.field_name)
+                return queryset.prefetch_related(self.field_name)
 
         return queryset
