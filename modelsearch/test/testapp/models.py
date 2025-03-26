@@ -27,8 +27,8 @@ class Book(index.Indexed, models.Model):
     tags = TaggableManager()
 
     search_fields = [
-        index.SearchField("title", boost=2.0),
-        index.SearchField("summary"),
+        index.SearchField("title", boost=10.0),
+        index.SearchField("summary", boost=2.0),
         index.AutocompleteField("title"),
         index.FilterField("title"),
         index.FilterField("authors"),
