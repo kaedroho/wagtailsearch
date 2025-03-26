@@ -65,11 +65,11 @@ MODELSEARCH_BACKENDS = {
 }
 ```
 
-## Indexing content
+## Indexing
 
 To index a model, add `modelsearch.index.Indexed` to the model class and define some `search_fields`:
 
-```
+```python
 from modelsearch import index
 
 class Book(index.Indexed, models.Model):
@@ -91,7 +91,7 @@ class Book(index.Indexed, models.Model):
 
 Then run the `rebuild_index` management command to build the search index.
 
-## Searching content
+## Searching
 
 Searching is done using a `.search()` method that is added to the querysets of indexed models.
 
