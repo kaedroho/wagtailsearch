@@ -39,6 +39,11 @@ test = [
   "django-tasks (>=0.6.1,<1)",
   "django-taggit (>=6.1.0,<7)",
 ]
+docs = [
+  "sphinx (>=8.2.3,<9)",
+  "sphinx-rtd-theme (>=3.0.2,<4.0)",
+  "myst-parser (>=4.0.1,<5)",
+]
 
 [project.urls]
 Source = "https://github.com/kaedroho/django-modelsearch"
