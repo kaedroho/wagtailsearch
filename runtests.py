@@ -1,12 +1,19 @@
-import os
 import argparse
+import os
+
 import django
 from django.core.management import call_command
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Run Django tests with a specified search backend.")
-    parser.add_argument("--backend", required=True, help="Specify the search backend (db, elasticsearch7, elasticsearch8).")
+    parser = argparse.ArgumentParser(
+        description="Run Django tests with a specified search backend."
+    )
+    parser.add_argument(
+        "--backend",
+        required=True,
+        help="Specify the search backend (db, elasticsearch7, elasticsearch8).",
+    )
 
     args = parser.parse_args()
 
@@ -16,6 +23,7 @@ def main():
     django.setup()
 
     call_command("test")
+
 
 if __name__ == "__main__":
     main()

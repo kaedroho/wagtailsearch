@@ -991,7 +991,10 @@ class BackendTests(ModelSearchTestCase):
     def test_rebuild_modelsearch_index_no_verbosity(self):
         stdout = StringIO()
         management.call_command(
-            "rebuild_modelsearch_index", verbosity=0, backend_name=self.backend_name, stdout=stdout
+            "rebuild_modelsearch_index",
+            verbosity=0,
+            backend_name=self.backend_name,
+            stdout=stdout,
         )
         self.assertFalse(stdout.getvalue())
 
@@ -1015,9 +1018,7 @@ class TestBackendLoader(TestCase):
     @mock.patch("modelsearch.backends.database.connection")
     def test_import_by_full_path_unknown_db_vendor(self, connection):
         connection.vendor = "unknown"
-        db = get_search_backend(
-            backend="modelsearch.backends.database.SearchBackend"
-        )
+        db = get_search_backend(backend="modelsearch.backends.database.SearchBackend")
         self.assertIsInstance(db, DatabaseSearchBackend)
 
     @unittest.skipIf(
@@ -1053,9 +1054,7 @@ class TestBackendLoader(TestCase):
             PostgresSearchBackend,
         )
 
-        db = get_search_backend(
-            backend="modelsearch.backends.database.SearchBackend"
-        )
+        db = get_search_backend(backend="modelsearch.backends.database.SearchBackend")
         self.assertIsInstance(db, PostgresSearchBackend)
 
     @unittest.skipIf(
@@ -1082,9 +1081,7 @@ class TestBackendLoader(TestCase):
     def test_import_by_full_path_mysql_db_vendor(self):
         from modelsearch.backends.database.mysql.mysql import MySQLSearchBackend
 
-        db = get_search_backend(
-            backend="modelsearch.backends.database.SearchBackend"
-        )
+        db = get_search_backend(backend="modelsearch.backends.database.SearchBackend")
         self.assertIsInstance(db, MySQLSearchBackend)
 
     @unittest.skipIf(

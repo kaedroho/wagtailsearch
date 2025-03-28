@@ -5,8 +5,8 @@ from django.test import TestCase
 from django.test.utils import override_settings
 
 from modelsearch.query import Phrase
-from modelsearch.tests.test_backends import BackendTests
 from modelsearch.test.testapp import models
+from modelsearch.tests.test_backends import BackendTests
 
 
 @unittest.skipUnless(

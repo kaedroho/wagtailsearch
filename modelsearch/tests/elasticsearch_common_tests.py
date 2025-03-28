@@ -4,8 +4,8 @@ from io import StringIO
 from django.core import management
 
 from modelsearch.query import MATCH_ALL
-from modelsearch.tests.test_backends import BackendTests
 from modelsearch.test.testapp import models
+from modelsearch.tests.test_backends import BackendTests
 
 
 class ElasticsearchCommonSearchBackendTests(BackendTests):

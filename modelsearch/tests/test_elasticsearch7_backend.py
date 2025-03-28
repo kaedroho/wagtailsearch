@@ -1148,7 +1148,10 @@ class TestElasticsearch7Mapping(TestCase):
                 },
                 "authors_filter": {"type": "integer"},
                 "publication_date_filter": {"type": "date"},
-                "summary": {"copy_to": ["_all_text", "_all_text_boost_2_0"], "type": "text"},
+                "summary": {
+                    "copy_to": ["_all_text", "_all_text_boost_2_0"],
+                    "type": "text",
+                },
                 "number_of_pages_filter": {"type": "integer"},
                 "tags": {
                     "type": "nested",
@@ -1299,7 +1302,10 @@ class TestElasticsearch7MappingInheritance(TestCase):
                 "authors_filter": {"type": "integer"},
                 "publication_date_filter": {"type": "date"},
                 "number_of_pages_filter": {"type": "integer"},
-                "summary": {"copy_to": ["_all_text", "_all_text_boost_2_0"], "type": "text"},
+                "summary": {
+                    "copy_to": ["_all_text", "_all_text_boost_2_0"],
+                    "type": "text",
+                },
                 "tags": {
                     "type": "nested",
                     "properties": {

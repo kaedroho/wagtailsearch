@@ -270,6 +270,7 @@ class BaseField:
 
         if apps.is_installed("taggit"):
             from taggit.managers import TaggableManager
+
             if isinstance(field, TaggableManager):
                 # As of django-taggit 1.0, value_from_object returns a list of Tag objects,
                 # which matches what we want

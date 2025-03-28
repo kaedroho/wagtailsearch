@@ -8,7 +8,6 @@ from modelsearch.models import IndexEntry
 
 # This migration takes on the base model defined in 0001_initial and adds certain fields that are specific to each database system
 class Migration(migrations.Migration):
-
     dependencies = [
         ("modelsearch", "0001_initial"),
     ]

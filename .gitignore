@@ -1,5 +1,6 @@
 __pycache__
 /venv
 /modelsearch.egg-info
+/build
 /dist
 /docs/_build

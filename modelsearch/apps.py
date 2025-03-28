@@ -37,7 +37,7 @@ class ModelSearchAppConfig(AppConfig):
                         "Your SQLite version is older than 3.19.0. A fallback search backend will be used instead.",
                         hint="Upgrade your SQLite version to at least 3.19.0",
                         id="modelsearch.W002",
-                        obj=WagtailSearchAppConfig,
+                        obj=ModelSearchAppConfig,
                     )
                 ]
             elif not fts5_available():
@@ -46,7 +46,7 @@ class ModelSearchAppConfig(AppConfig):
                         "Your SQLite installation is missing the fts5 extension. A fallback search backend will be used instead.",
                         hint="Upgrade your SQLite installation to a version with fts5 enabled",
                         id="modelsearch.W003",
-                        obj=WagtailSearchAppConfig,
+                        obj=ModelSearchAppConfig,
                     )
                 ]
         return []
